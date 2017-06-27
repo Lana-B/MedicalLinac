@@ -263,16 +263,6 @@ void CML2SDWithVoxels::saveData(G4String Filename, Svoxel ***voxels)
 
 
 	out << "Phys Volume x [mm], y [mm], z [mm], ix, iy, iz, Dose [Gy], Dose2 [Gy^2], nEvents" << G4endl;
-	// auto analysisManager = G4AnalysisManager::Instance();
-	    // analysisManager->SetFileName("medLinacOutput");
-	// auto analysisReader = G4AnalysisReader::Instance();
-	    // analysisReader->SetFileName("medLinacOutput");
-		// analysisManager->GetNtuple(analysisReader->GetNtuple("medLinac"));
-
-	// std::cout<<"!!!\n\n\n!!! ntupleID:  "<< analysisReader->GetNtuple("medLinac") <<"!!!\n\n\n!!! "<<std::endl;
-	// std::cout<<"!!!\n\n\n!!! ML2SD:  "<< analysisManager<<"!!!\n\n\n!!! "<<std::endl;
-	// auto analysisManager = G4AnalysisManager::Instance();
-	// analysisManager->FillNtupleDColumn(0, 1);
 
 	for (int ix=0; ix< NumberOfVoxelsAlongX; ix++)
 	{
@@ -292,32 +282,6 @@ void CML2SDWithVoxels::saveData(G4String Filename, Svoxel ***voxels)
 					out << voxels[ix][iy][iz].depEnergy/(joule/kg) << '\t';
 					out << voxels[ix][iy][iz].depEnergy2/((joule/kg)*(joule/kg)) << '\t';
 					out << voxels[ix][iy][iz].nEvents << G4endl;
-					// analysisManager->FillNtupleDColumn(0, 2);
-					// analysisManager->FillNtupleDColumn(1, 2);
-					// analysisManager->FillNtupleDColumn(2, 2);
-					// analysisManager->FillNtupleDColumn(3, 2);
-					// analysisManager->FillNtupleDColumn(4, 2);
-					// analysisManager->FillNtupleDColumn(5, 2);
-					// analysisManager->FillNtupleDColumn(6, 2);
-					// analysisManager->FillNtupleDColumn(7, 2);
-					// analysisManager->FillNtupleDColumn(8, 2);
-					// analysisManager->FillNtupleIColumn(9, 2);
-
-					// analysisManager->AddNtupleRow(); 
-					// analysisManager->FillNtupleDColumn(0, voxels[ix][iy][iz].volumeId);
-					// analysisManager->FillNtupleDColumn(1,  voxels[ix][iy][iz].pos.getX()/mm);
-					// analysisManager->FillNtupleDColumn(2, voxels[ix][iy][iz].pos.getY()/mm);
-					// analysisManager->FillNtupleDColumn(3, voxels[ix][iy][iz].pos.getZ()/mm);
-					// analysisManager->FillNtupleDColumn(4, ix);
-					// analysisManager->FillNtupleDColumn(5, iy);
-					// analysisManager->FillNtupleDColumn(6, iz);
-					// analysisManager->FillNtupleDColumn(7, voxels[ix][iy][iz].depEnergy/(joule/kg));
-					// analysisManager->FillNtupleDColumn(8, voxels[ix][iy][iz].depEnergy2/((joule/kg)*(joule/kg)));
-					// analysisManager->FillNtupleIColumn(9, voxels[ix][iy][iz].nEvents);
-
-					// analysisManager->AddNtupleRow();  
-					// std::cout << "\n !!!\n !!!\n !!!nEvents>0!!! \n !!!\n!!! \n";
-					// std::cout << "\n !!!\n !!!\n !!!nEvents>0!!! \n !!!\n!!! \n";
 
 				}
 			}
