@@ -74,8 +74,8 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	// G4Material *WATER=G4NistManager::Instance()->FindOrBuildMaterial("G4_WATER");
 	// G4Box *SiDiodePhantomBox = new G4Box("SiDiodePhantomBox", halfSize.getX(), halfSize.getY(), halfSize.getZ());
 	G4double innerRadius = 0.*mm;
-	G4double outerRadius = halfSize.getX();
-	G4double hz = halfSize.getZ();
+	G4double outerRadius = 100*mm;
+	G4double hz = 50*mm;
 	G4double startAngle = 0.*deg;
 	G4double spanningAngle = 360.*deg;
 
@@ -88,10 +88,10 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	             spanningAngle);
 
     G4double  pRmin1 = 0*mm;
-    G4double  pRmax1 = 0.85*halfSize.getX();
+    G4double  pRmax1 = 85*mm;
     G4double  pRmin2 = 0*mm;
-    G4double  pRmax2 = 0.5*halfSize.getX();
-    G4double  pDz = halfSize.getZ()-4*mm;
+    G4double  pRmax2 = 50*mm;
+    G4double  pDz = 46*mm;
     G4double  pSPhi = 0.*deg;
     G4double  pDPhi = 360.*deg;
 
@@ -106,7 +106,7 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
                 pSPhi,
                 pDPhi);
 
-	G4RotationMatrix rotateMatrixEmpty=new G4RotationMatrix();
+	G4RotationMatrix *rotateMatrixEmpty=new G4RotationMatrix();
     G4ThreeVector zTrans(0, 0, 6*mm);
 
 	G4SubtractionSolid* subtraction =
