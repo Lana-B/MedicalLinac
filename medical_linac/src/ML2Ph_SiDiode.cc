@@ -46,7 +46,7 @@
 CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
 	// phantom size and position
-	halfSize.set(150*mm,150*mm,150*mm);
+	halfSize.set(150*mm,150*mm,50*mm);
 	// phantom position
 	centre.set(0.,0.,0.);
 }
@@ -63,8 +63,8 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 {
 	PVWorld=PWorld;
 
-	G4double A, Z;
-	A = 28.09*g/mole;
+	// G4double A, Z;
+	// A = 28.09*g/mole;
 	// G4Element* elSi = new G4Element("Silicon", "Si", Z=14., A);
 	G4NistManager* man = G4NistManager::Instance();
 
@@ -75,7 +75,7 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	// G4Box *SiDiodePhantomBox = new G4Box("SiDiodePhantomBox", halfSize.getX(), halfSize.getY(), halfSize.getZ());
 	G4double innerRadius = 0.*mm;
 	G4double outerRadius = halfSize.getX();
-	G4double hz = 0.5*mm;
+	G4double hz = halfSize.getZ();
 	G4double startAngle = 0.*deg;
 	G4double spanningAngle = 360.*deg;
 
@@ -88,10 +88,10 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	             spanningAngle);
 
     G4double  pRmin1 = 0*mm;
-    G4double  pRmax1 = 1.3*mm;
+    G4double  pRmax1 = 0.85*halfSize.getX();
     G4double  pRmin2 = 0*mm;
-    G4double  pRmax2 = 1.2*mm;
-    G4double  pDz = 0.49*mm;
+    G4double  pRmax2 = 0.5*halfSize.getX();
+    G4double  pDz = halfSize.getZ()-4*mm;
     G4double  pSPhi = 0.*deg;
     G4double  pDPhi = 360.*deg;
 
@@ -106,11 +106,21 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
                 pSPhi,
                 pDPhi);
 
+	G4RotationMatrix rotateMatrixEmpty=new G4RotationMatrix();
+    G4ThreeVector zTrans(0, 0, 6*mm);
+
 	G4SubtractionSolid* subtraction =
-    new G4SubtractionSolid("Diode", siliconTube, emptyCone);
+    new G4SubtractionSolid("Diode", siliconTube, emptyCone, rotateMatrixEmpty, zTrans);
 
 	G4LogicalVolume *SiDiodeLV = new G4LogicalVolume(subtraction, Si, "SiDiodeLV", 0, 0, 0);
-	SiDiodePV = new G4PVPlacement(0, centre, "SiDiodePV", SiDiodeLV, PVWorld, false, 0);
+
+	 //---------rotation matrix for diode --------
+
+	G4RotationMatrix*  rotateMatrixDiode=new G4RotationMatrix();
+	// rotateMatrixDiode->rotateX(90.0*deg);
+	// rotateMatrixDiode->rotateY(-45.0*deg);
+
+	SiDiodePV = new G4PVPlacement(rotateMatrixDiode, centre, "SiDiodePV", SiDiodeLV, PVWorld, false, 0);
 
 	// G4LogicalVolume *SiDiodePhantomLV = new G4LogicalVolume(SiDiodePhantomBox, WATER, "SiDiodePhantomLV", 0, 0, 0);
 	// SiDiodePhantomPV = new G4PVPlacement(0, centre, "SiDiodePhantomPV", SiDiodePhantomLV, PVWorld, false, 0);
