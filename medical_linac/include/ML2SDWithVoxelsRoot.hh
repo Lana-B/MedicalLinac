@@ -84,6 +84,9 @@ private:
 	G4bool bActive, bSaveROG;
 	G4double voxelMass, density, voxelVolume;
 	std::vector <SvolumeNameId> volumeNameIdLink;
+	G4double vecPosX;
+	G4double vecPosY;
+	G4double vecPosZ;
 };
 
 

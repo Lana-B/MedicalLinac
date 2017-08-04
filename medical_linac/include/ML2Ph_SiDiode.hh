@@ -49,6 +49,8 @@
 #include "G4Box.hh"
 #include "G4Tubs.hh"
 #include "G4Cons.hh"
+#include "G4Orb.hh"
+#include "G4UnionSolid.hh"
 #include "G4VisAttributes.hh"
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
@@ -76,8 +78,14 @@ public:
 private:
     G4VPhysicalVolume *PVWorld;
     G4VPhysicalVolume *SiDiodePV;
+    G4VPhysicalVolume *SiDiodePVSides;
+    G4VPhysicalVolume *SiDiodePVTop;
+    G4VPhysicalVolume *phantomPV;
+    G4VPhysicalVolume *airPV;
 
     CML2SDWithVoxels *sensDet;
+    CML2SDWithVoxels *sensDet2;
+    CML2SDWithParticle *sensDetParticle;
     G4ThreeVector centre, halfSize;
 };
 
