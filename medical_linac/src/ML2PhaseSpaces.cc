@@ -87,7 +87,7 @@ bool CML2PhaseSpaces::createPlane(G4int idSD_Type, G4int max_N_particles_in_PhSp
 	logVol = new G4LogicalVolume(box, Vacum, name+"LV", 0, 0, 0);
 	phVol= new G4PVPlacement(0, centre, name+"PV", logVol, PVWorld, false, 0);
 
-	G4VisAttributes* simplePhSpVisAtt= new G4VisAttributes(G4Colour::Yellow());
+	G4VisAttributes* simplePhSpVisAtt= new G4VisAttributes(G4Colour::Red());
 	simplePhSpVisAtt->SetVisibility(true);
 	simplePhSpVisAtt->SetForceSolid(true);
 	logVol->SetVisAttributes(simplePhSpVisAtt);

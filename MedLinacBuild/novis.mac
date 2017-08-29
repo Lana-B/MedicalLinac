@@ -3,7 +3,7 @@
 
 ###  Visualization 
 
-/OnlyVisio true                                    # switch the visualization mode
+/OnlyVisio false                                    # switch the visualization mode
 
 ###  Experimental comparison and convergence
 
@@ -14,7 +14,6 @@
 /convergence/fileExperimentalDataOut VoxelsTest_Out # full path and name of the experimental file results
 
 ### Phase space
-
 
 /general/centrePhaseSpace 0 0 550 mm                   # position of the centre of the plane phase space
 /general/halfSizePhaseSpace 200 200 1 mm              # half size of the plane phase space
@@ -32,7 +31,7 @@
 ### Number of primary events
 
 
-/general/nBeam 3000                                 # number of events to run
+/general/nBeam 1000                                 # number of events to run
 
 
 ### NUMBER STORED  
@@ -59,7 +58,8 @@
 #/phantom/PhantomName fullWater				# phantom name to select among those implemented
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 #/phantom/centre 0 0 -200 # phantom centre coordinates in the world [mm]
-/step/waterPhantomStepMax 1  mm
+/Step/waterPhantomStepMax 1 mm 
+
 ### ACCELERATOR
 
 /accelerator/AcceleratorName acc1			# accelerator name to select among those implemented 

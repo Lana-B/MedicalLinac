@@ -177,6 +177,7 @@ void CML2SDWithVoxels::resetVoxelsSingle()
 }
 G4bool CML2SDWithVoxels::ProcessHits(G4Step *aStep, G4TouchableHistory *ROHist)
 {
+	// std::cout<<"ProcessHits "<<std::endl;
 
 	if (bActive)
 	{
@@ -190,7 +191,11 @@ G4bool CML2SDWithVoxels::ProcessHits(G4Step *aStep, G4TouchableHistory *ROHist)
 			ix=ROHist->GetReplicaNumber(2);
 			iy=ROHist->GetReplicaNumber(0);
 			iz=ROHist->GetReplicaNumber(1);
+			vecPosX = (aStep->GetPreStepPoint()->GetPosition().getX());
+			vecPosY = (aStep->GetPreStepPoint()->GetPosition().getY());
+			vecPosZ = (aStep->GetPreStepPoint()->GetPosition().getZ());
 
+			// std::cout<<"vecPosX: "<<vecPosX<<std::endl;
 			density=aStep->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume()->GetMaterial()->GetDensity();
 
 			voxelMass=voxelVolume*density;
@@ -314,7 +319,9 @@ void CML2SDWithVoxels::saveRoot()
 					analysisManager->FillNtupleDColumn(7, voxelsSingle[ix][iy][iz].depEnergy/(joule/kg));
 					analysisManager->FillNtupleDColumn(8, voxelsSingle[ix][iy][iz].depEnergy2/((joule/kg)*(joule/kg)));
 					analysisManager->FillNtupleIColumn(9, voxelsSingle[ix][iy][iz].nEvents);
-
+					analysisManager->FillNtupleDColumn(10, vecPosX);
+					analysisManager->FillNtupleDColumn(11, vecPosY);
+					analysisManager->FillNtupleIColumn(12, vecPosZ);
 					analysisManager->AddNtupleRow();  
 					// std::cout << "\n !!!\n !!!\n !!!nEvents>0!!! \n !!!\n!!! \n";
 				}

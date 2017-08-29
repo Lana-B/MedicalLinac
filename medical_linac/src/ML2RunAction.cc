@@ -67,6 +67,9 @@ CML2RunAction::CML2RunAction(CML2Convergence *conv, G4int nB, G4bool bOV)
     analysisManager->CreateNtupleDColumn("Dose"); // column Id = 7
     analysisManager->CreateNtupleDColumn("Dose2");    // column Id = 8
     analysisManager->CreateNtupleIColumn("nEvents");    // column Id = 9
+    analysisManager->CreateNtupleDColumn("xPos"); // column Id = 10
+    analysisManager->CreateNtupleDColumn("yPos");    // column Id = 11
+    analysisManager->CreateNtupleIColumn("zPos");    // column Id = 12
     analysisManager->FinishNtuple();
 }
 
@@ -88,7 +91,7 @@ void CML2RunAction::BeginOfRunAction(const G4Run *)
     // Open an output file 
     // The default file name is set in B5RunAction::B5RunAction(),
     // it can be overwritten in a macro
-    G4String fileName = "medLinacOutputSingle";
+    G4String fileName = "medLinacOutputSinglewPhantom";
 
     analysisManager->OpenFile(fileName);
 

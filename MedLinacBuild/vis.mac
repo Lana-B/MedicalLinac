@@ -2,6 +2,8 @@
 /run/initialize
 # Use this open statement to create an OpenGL view:
 /vis/open OGL
+
+
 #
 # Use this open statement to create a .prim file suitable for
 # viewing in DAWN:
@@ -23,8 +25,14 @@
 # Draw geometry:
 /vis/drawVolume
 #
+
 # Specify view angle:
 /vis/viewer/set/viewpointThetaPhi 45. 45.
+#
+/vis/open RayTracerX
+/vis/viewer/copyViewFrom viewer-0
+/vis/viewer/refresh
+
 #
 # Specify zoom value:
 #/vis/viewer/zoom 2.
@@ -73,22 +81,22 @@
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 
 /accelerator/rotationX 0 deg  # angles of rotation along X  [deg]
-/run/beamOn 1000
+/run/beamOn 1001
 
-/phantom/centre 0 0 200 # phantom centre coordinates in the world [mm]
-/accelerator/rotationX 45 deg  # angles of rotation along X  [deg]
-/run/beamOn 1000
+#/phantom/centre 0 0 200 # phantom centre coordinates in the world [mm]
+#/accelerator/rotationX 45 deg  # angles of rotation along X  [deg]
+#run/beamOn 1000
 
 
-/accelerator/rotation90Y true
-/phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
+#/accelerator/rotation90Y true
+#/phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 
-/accelerator/rotationX 0 deg  # angles of rotation along X  [deg]
-/run/beamOn 1000
+#/accelerator/rotationX 0 deg  # angles of rotation along X  [deg]
+#/run/beamOn 1000
 
-/phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
-/accelerator/rotationX 45 deg  # angles of rotation along X  [deg]
-/run/beamOn 1000
+#/phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
+#/accelerator/rotationX 45 deg  # angles of rotation along X  [deg]
+#/run/beamOn 1000
 
 
 # all the physical volumes names:

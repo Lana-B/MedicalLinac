@@ -53,12 +53,14 @@
 CML2PhantomConstructionMessenger::CML2PhantomConstructionMessenger(CML2PhantomConstruction *phantomConstructor) : pPhantomConstructor (phantomConstructor)
 {
 	PhantomName=new G4UIcmdWithAString("/phantom/PhantomName",this);
-	PhantomName->SetDefaultValue("fullWater");
+	// PhantomName->SetDefaultValue("fullWater");
+	PhantomName->SetDefaultValue("SiDiode");
 	PhantomName->SetGuidance("phantom name to select among those implemented  fullWater, boxInBox, SiDiode, Dicom1");
-	pPhantomConstructor->setPhantomName("fullWater");
+	// pPhantomConstructor->setPhantomName("fullWater");
+	pPhantomConstructor->setPhantomName("SiDiode");
 
 	PhantomFileName =new G4UIcmdWithAString("/phantom/PhantomFileName",this);
-	PhantomFileName ->SetDefaultValue("");
+	PhantomFileName->SetDefaultValue("");
 	PhantomFileName->SetGuidance("full path and macro file name containing specific setup data for the phantom chosen");
 	pPhantomConstructor->setPhantomFileName ("");
 

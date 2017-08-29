@@ -97,7 +97,7 @@ bool CML2PhantomConstruction::design(void)
 	else if (phantomName=="SiDiode")
 	{
 		Ph_SiDiode=new CML2Ph_SiDiode();bPhanExists=true;
-		halfPhantomInsideSize=Ph_SiDiode->getHalfContainerSize();
+		halfPhantomInsideSize=Ph_SiDiode->getHalfContainerSize()*2;
 	}
  	if (centre.size()<1)
  	{addNewCentre(G4ThreeVector(0.,0.,0.));}
@@ -178,6 +178,7 @@ void CML2PhantomConstruction::createPhysicalVolumeNamesList(G4String  *matNames,
 		volumeNameIdLink.push_back(svnid);
 	}
 }
+
 void CML2PhantomConstruction::createPhysicalVolumeNamesList(G4VPhysicalVolume  *PV)
 {
 	int nLVD1;

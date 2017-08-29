@@ -1,0 +1,6 @@
+export G4LEVELGAMMADATA=/Users/lb8075/Geant/geant4.10.03.p01-build/dataPhotonEvaporation4.3.2
+export G4NEUTRONXSDATA=/Users/lb8075/Geant/geant4.10.03.p01-build/data/G4NEUTRONXS1.4
+export G4LEDATA=/Users/lb8075/Geant/geant4.10.03.p01-build/data/G4EMLOW6.50
+export G4ENSDFSTATEDATA=/Users/lb8075/Geant/geant4.10.03.p01-build/data/G4ENSDFSTATE2.1 
+
+export DYLD_LIBRARY_PATH=/usr/lib/:ADDITION_LIBRARY_PATH_LOCATION

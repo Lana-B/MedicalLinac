@@ -78,15 +78,35 @@ public:
 private:
     G4VPhysicalVolume *PVWorld;
     G4VPhysicalVolume *SiDiodePV;
-    G4VPhysicalVolume *SiDiodePVSides;
-    G4VPhysicalVolume *SiDiodePVTop;
+    // G4VPhysicalVolume *SiDiodePVSides;
+    // G4VPhysicalVolume *SiDiodePVTop;
     G4VPhysicalVolume *phantomPV;
-    G4VPhysicalVolume *airPV;
-
+    // G4VPhysicalVolume *airPV;
+    G4VPhysicalVolume *PCB_PV;
+    G4VPhysicalVolume *electrode_PVTop;
+    G4VPhysicalVolume *electrode_PVBot;
     CML2SDWithVoxels *sensDet;
-    CML2SDWithVoxels *sensDet2;
-    CML2SDWithParticle *sensDetParticle;
+    // CML2SDWithVoxels *sensDet2;
+    // CML2SDWithParticle *sensDetParticle;
     G4ThreeVector centre, halfSize;
+
+    G4double  pRmin1;
+    G4double  pRmax1;
+    G4double  pRmin2;
+    G4double  pRmax2;
+    G4double  pDz ;
+    G4double  pSPhi;
+    G4double  pDPhi;
+    G4double innerRadius;
+    G4double outerRadius;
+    G4double hz;
+    G4double startAngle;
+    G4double spanningAngle;
+    G4double innerRadius2;
+    G4double outerRadius2;
+    G4double hz2;
+    G4double startAngle2;
+    G4double spanningAngle2;
 };
 
 

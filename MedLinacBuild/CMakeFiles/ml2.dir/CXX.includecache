@@ -2514,6 +2514,20 @@ G4ios.hh
 G4ParticleDefinition.hh
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4ParticleDefinition.hh
 
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4Orb.hh
+G4UOrb.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4UOrb.hh
+CLHEP/Units/PhysicalConstants.h
+-
+G4CSGSolid.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4CSGSolid.hh
+G4Polyhedron.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4Polyhedron.hh
+G4Orb.icc
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4Orb.icc
+
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4Orb.icc
+
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4OrderedTable.hh
 globals.hh
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/globals.hh
@@ -4267,6 +4281,14 @@ G4UItokenNum.hh
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4UItokenNum.hh
 globals.hh
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/globals.hh
+
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4UOrb.hh
+G4USolid.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4USolid.hh
+UOrb.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/UOrb.hh
+G4Polyhedron.hh
+/Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4Polyhedron.hh
 
 /Users/lb8075/Geant/geant4.10.3.p01-install/include/Geant4/G4USolid.hh
 G4VSolid.hh
@@ -6371,6 +6393,10 @@ G4Tubs.hh
 /Users/lb8075/Geant/medical_linac/include/G4Tubs.hh
 G4Cons.hh
 /Users/lb8075/Geant/medical_linac/include/G4Cons.hh
+G4Orb.hh
+/Users/lb8075/Geant/medical_linac/include/G4Orb.hh
+G4UnionSolid.hh
+/Users/lb8075/Geant/medical_linac/include/G4UnionSolid.hh
 G4VisAttributes.hh
 /Users/lb8075/Geant/medical_linac/include/G4VisAttributes.hh
 G4PVPlacement.hh
