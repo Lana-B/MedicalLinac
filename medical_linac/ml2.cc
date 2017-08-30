@@ -114,6 +114,8 @@ int main(int argc, char* argv[])
 	{
 		sscanf(argv[2],"%d", &myInputData->inputData.generalData.seed);
 		myInputData->inputData.generalData.StartFileInputData=(G4String)argv[1];
+		std::cout<<"### Seed set to ###"<<myInputData->inputData.generalData.seed<<'\n';
+
 	}
 
 	// read the main mac file and execute the commands
@@ -142,7 +144,7 @@ int main(int argc, char* argv[])
 
 
 	// build the ML2RunAction to assign the single phantom name at each run 
-	CML2RunAction *myRunAction=new CML2RunAction(convergence, myInputData->inputData.generalData.nBeam, myInputData->bOnlyVisio);
+	CML2RunAction *myRunAction=new CML2RunAction(convergence, myInputData->inputData.generalData.nBeam, myInputData->bOnlyVisio, myInputData->inputData.generalData.seed);
 	
 	CML2SteppingAction *myStepAction=new CML2SteppingAction(convergence);
 	CML2EventAction *ML2EventAction = new CML2EventAction();
