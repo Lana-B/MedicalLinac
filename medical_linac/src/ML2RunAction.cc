@@ -43,7 +43,7 @@
 
 #include "ML2RunAction.hh"
 
-CML2RunAction::CML2RunAction(CML2Convergence *conv, G4int nB, G4bool bOV)
+CML2RunAction::CML2RunAction(CML2Convergence *conv, G4int nB, G4bool bOV, int iSeedN)
 {
     bRotationTranslationFilesNames=true;
     convergence=conv;
@@ -51,6 +51,9 @@ CML2RunAction::CML2RunAction(CML2Convergence *conv, G4int nB, G4bool bOV)
     bOnlyVisio=bOV;
     nLoop=0;
 
+    char aSeed[10];
+    sprintf(aSeed,"%d", iSeedN);
+    seedName=(G4String)aSeed;
     auto analysisManager = G4AnalysisManager::Instance();
     // analysisManager->SetFileName("medLinacOutput");
     analysisManager->SetVerboseLevel(3);
@@ -91,7 +94,7 @@ void CML2RunAction::BeginOfRunAction(const G4Run *)
     // Open an output file 
     // The default file name is set in B5RunAction::B5RunAction(),
     // it can be overwritten in a macro
-    G4String fileName = "medLinacOutputSinglewPhantom";
+    G4String fileName = "medLinacOutputSinglewPhantom"+seedName;
 
     analysisManager->OpenFile(fileName);
 

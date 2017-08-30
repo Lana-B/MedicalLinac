@@ -54,7 +54,7 @@
 class CML2RunAction : public G4UserRunAction
 {
 public:
-	CML2RunAction(CML2Convergence *convergence, G4int nBeam, G4bool bOnlyVisio);
+	CML2RunAction(CML2Convergence *convergence, G4int nBeam, G4bool bOnlyVisio, int iSeedNum);
 	~CML2RunAction(void);
 	void BeginOfRunAction(const G4Run *aRun);
 	void EndOfRunAction(const G4Run *aRun);
@@ -67,6 +67,7 @@ private:
 	G4double loopElapsedTime;
 	G4int nBeam, nLoop;
 	G4bool bOnlyVisio;
+	G4string seedName;
 };
 
 #endif
