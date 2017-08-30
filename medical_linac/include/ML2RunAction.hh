@@ -67,7 +67,7 @@ private:
 	G4double loopElapsedTime;
 	G4int nBeam, nLoop;
 	G4bool bOnlyVisio;
-	G4string seedName;
+	G4String seedName;
 };
 
 #endif
