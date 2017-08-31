@@ -1,0 +1,15 @@
+#!/bin/sh
+#run Geant 4 sim without visualisation
+
+source /cvmfs/sft.cern.ch/lcg/views/LCG_90a/x86_64-slc6-gcc62-opt/setup.sh
+var=$(($1+$2))
+echo "args are $1 and $2" 
+echo "Seed is $var"
+./ml2 novis.mac $var
+echo "var is $var"
+ls -la
+/usr/bin/hdfs dfs -copyFromLocal *${var}.root /user/lb8075/
+/usr/bin/hdfs dfs -copyFromLocal *${var}.txt /user/lb8075/
+rm *${var}.root
+rm *${var}.txt
+
