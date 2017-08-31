@@ -215,7 +215,7 @@ G4bool CML2SDWithVoxels::ProcessHits(G4Step *aStep, G4TouchableHistory *ROHist)
 			if(nTotalEvents%100==0){
 				// std::cout<<"total: "<<nTotalEvents<<std::endl;
 			}
-
+			saveRoot();
 			if (nTotalEvents%saving_in_ROG_Voxels_every_events==0 && nTotalEvents>0)
 			{
 				std::cout<<"SAVE!!!\n\n\n"<<std::endl;

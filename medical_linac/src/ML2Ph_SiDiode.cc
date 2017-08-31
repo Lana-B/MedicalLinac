@@ -45,8 +45,9 @@
 
 CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
+	multFactor=30;
 	// phantom size and position
-	halfSize.set(10.0*50*mm,10.0*50*mm,4.0*50*mm);
+	halfSize.set(1.5*10*multFactor*mm,1.5*10*multFactor*mm,2.5*10*multFactor*mm);
 	// phantom position
 	centre.set(0.,0.,0.);
 }
@@ -62,7 +63,7 @@ void CML2Ph_SiDiode::writeInfo()
 bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Voxels_every_events, G4int seed, G4String ROGOutFile, G4bool bSaveROG)
 {
 	PVWorld=PWorld;
-	int multFactor=30;
+
 	bool bCreated=false;
 	G4double A, Z;
 

@@ -107,6 +107,7 @@ private:
     G4double hz2;
     G4double startAngle2;
     G4double spanningAngle2;
+    int multFactor;
 };
 
 
