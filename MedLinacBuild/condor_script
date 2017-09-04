@@ -1,0 +1,14 @@
+universe = vanilla
+executable = runscript
+arguments = $(cluster) $(process)
+request_cpus = 1
+request_memory = 3000
+transfer_input_files = novis.mac, ml2, acc1.mac
+should_transfer_files = yes
+when_to_transfer_output = on_exit_or_evict
+output = medlinac.job.$(cluster).$(process).out
+error = medlinac.job.$(cluster).$(process).err
+log = medlinac.job.log
+getenv = true
+requirements = ((OpSysAndVer == "SL6") )
+queue 2
