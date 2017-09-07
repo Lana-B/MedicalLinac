@@ -133,6 +133,7 @@ bool CML2PhantomConstruction::Construct(G4VPhysicalVolume *PVWorld,
 // 		simpleAlSVisAtt->SetForceWireframe(false);
 		phmWorldLV->SetVisAttributes(simpleAlSVisAtt);
 	
+		// G4ThreeVector zTrans(0, 0,200*mm);
 
 		PVPhmWorld= new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), "phmWorldPV", phmWorldLV, PVWorld, false, 0);
 	

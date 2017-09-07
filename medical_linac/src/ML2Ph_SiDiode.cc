@@ -45,7 +45,7 @@
 
 CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
-	multFactor=30;
+	multFactor=8;
 	// phantom size and position
 	halfSize.set(1.5*10*multFactor*mm,1.5*10*multFactor*mm,2.5*10*multFactor*mm);
 	// phantom position
