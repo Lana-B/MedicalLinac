@@ -94,7 +94,7 @@ void CML2RunAction::BeginOfRunAction(const G4Run *)
     // Open an output file 
     // The default file name is set in B5RunAction::B5RunAction(),
     // it can be overwritten in a macro
-    G4String fileName = "/tmp/lb8075/medLinacOutputSinglewPhantom_"+seedName;
+    G4String fileName = "medLinacOutputSinglewPhantom_"+seedName;
 
     analysisManager->OpenFile(fileName);
 
