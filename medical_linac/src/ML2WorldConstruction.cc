@@ -79,7 +79,7 @@ bool CML2WorldConstruction::create(SInputData *inputData, bool bOV)
 {
     // create the world box
     bOnlyVisio=bOV;
-    G4double halfSize=2000.*mm;
+    G4double halfSize=1800.*mm;
     G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
     G4Box *worldB = new G4Box("worldG", halfSize, halfSize, halfSize);
     G4LogicalVolume *worldLV = new G4LogicalVolume(worldB, Vacuum, "worldL", 0, 0, 0);
