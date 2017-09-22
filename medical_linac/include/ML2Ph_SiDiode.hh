@@ -81,6 +81,7 @@ private:
     // G4VPhysicalVolume *SiDiodePVSides;
     // G4VPhysicalVolume *SiDiodePVTop;
     G4VPhysicalVolume *phantomPV;
+    G4VPhysicalVolume *plugPV;
     // G4VPhysicalVolume *airPV;
     G4VPhysicalVolume *PCB_PV;
     G4VPhysicalVolume *electrode_PVTop;
@@ -97,6 +98,13 @@ private:
     G4double  pDz ;
     G4double  pSPhi;
     G4double  pDPhi;
+    G4double  plugRmin1;
+    G4double  plugRmax1;
+    G4double  plugRmin2;
+    G4double  plugRmax2;
+    G4double  plugDz ;
+    G4double  plugSPhi;
+    G4double  plugDPhi;
     G4double innerRadius;
     G4double outerRadius;
     G4double hz;

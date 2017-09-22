@@ -92,6 +92,20 @@ public:
 			idParticleSource=id_phaseSpace;
 		}
 	}
+	inline void setParticleType(G4String part)
+	{
+		particleTypeName=part;
+		G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+
+		if(particleTypeName=="electron")
+		{
+			particleGunType=particleTable->FindParticle("e-");
+		}
+		else if(particleTypeName=="gamma" || particleTypeName=="photon")
+		{
+			particleGunType=particleTable->FindParticle("gamma");
+		}
+	}
 	inline void setRotation(G4RotationMatrix *val){rm=val;};
 	inline G4int getNrecycling(){return nRecycling;};
 	inline G4int getSourceTypeName(){return idParticleSource;};
@@ -128,6 +142,9 @@ private:
 	Sparticle *particles, *particle;
 	int nParticle, nPhSpParticles, nRandomParticles, idCurrentParticleSource;
 	G4String sourceTypeName;
+	G4String particleTypeName;
+
+	G4ParticleDefinition *particleGunType;
 };
 
 #endif

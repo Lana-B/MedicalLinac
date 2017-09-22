@@ -124,7 +124,7 @@ bool CML2PhantomConstruction::Construct(G4VPhysicalVolume *PVWorld,
 	if(design())
 	{
 		phantomContstructionMessenger->SetReferenceWorld(bOV);	// create the phantom-world box
-		G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+		G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR");
 
 		G4Box *phmWorldB = new G4Box("phmWorldG", halfPhantomInsideSize.getX(), halfPhantomInsideSize.getY(), halfPhantomInsideSize.getZ());
 		G4LogicalVolume *phmWorldLV = new G4LogicalVolume(phmWorldB, Vacuum, "phmWorldL", 0, 0, 0);

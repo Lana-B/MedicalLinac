@@ -47,7 +47,7 @@ CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
 	multFactor=8;
 	// phantom size and position
-	halfSize.set(1.5*10*multFactor*mm,1.5*10*multFactor*mm,2.5*10*multFactor*mm);
+	halfSize.set(30*1.1*multFactor*mm,30*1.1*multFactor*mm,7.5*1.1*multFactor*mm);
 	// phantom position
 	centre.set(0.,0.,0.);
 }
@@ -87,16 +87,16 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	G4Cons* SiDiodeLVSides = new G4Cons("subCone", pRmin1, pRmax1, pRmin2, pRmax2, pDz, pSPhi, pDPhi);
 
-	innerRadius = (0.*multFactor)*mm;
-	outerRadius = (1.5*multFactor)*mm;
-	hz =(0.05*multFactor)*mm;
+	innerRadius = (0.*multFactor);
+	outerRadius = (1.5*multFactor);
+	hz =(0.05*multFactor);
 	startAngle = 0.*deg;
 	spanningAngle = 360.*deg;
 
 	G4Tubs* SiDiodeLVTop = new G4Tubs("siTube", innerRadius, outerRadius,hz, startAngle, spanningAngle);
 
 	G4RotationMatrix *rotateMatrixEmpty = new G4RotationMatrix();
-    G4ThreeVector zTrans(0, 0,-(pDz-hz)*mm);
+    G4ThreeVector zTrans(0, 0,-(pDz-hz));
     // G4ThreeVector zTrans(0, 0,0);
 
 	G4UnionSolid* SiDiodeAdd = new G4UnionSolid("Diode", SiDiodeLVSides, SiDiodeLVTop, rotateMatrixEmpty, zTrans);
@@ -126,7 +126,7 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	// G4Orb* phantom
 	// = new G4Orb("phantom", 
 	//             300*mm);
-	G4double hz3 = (1.0*multFactor)*mm;
+	G4double hz3 = (2.0*multFactor)*mm;
 
 	G4Tubs* phantomTop
 	= new G4Tubs("phantomTop",
@@ -169,6 +169,10 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	G4LogicalVolume *phantomLV = new G4LogicalVolume(phantomAdd, PMMA, "SiDiodePhantomLV", 0, 0, 0);
 	phantomPV = new G4PVPlacement(rotateMatrixDiode, centre, "phantomPV", phantomLV, PVWorld, false, 0);
+
+
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
 	//////////////////////////////////          PCB F4          /////////////////////////////////////
@@ -233,6 +237,28 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
+	//////////////////////////////////      Phantom plugged     /////////////////////////////////////
+	//////////////////////////////////     with PMMA or glue    /////////////////////////////////////
+	//////////////////////////////////                          /////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    plugRmin1 = (0.0*multFactor)*mm;
+    plugRmax1 = (1.0*multFactor*0.97)*mm;
+    plugRmin2 = (0.0*multFactor)*mm;
+    plugRmax2 = (1.2*multFactor*0.97)*mm;
+    plugDz = ((pDz-hz-electrode_hz)*0.97);
+    plugSPhi = 0.*deg;
+    plugDPhi = 360.*deg;
+
+	G4Cons* plugCon = new G4Cons("plugCone", plugRmin1, plugRmax1, plugRmin2, plugRmax2, plugDz, plugSPhi, plugDPhi);
+	G4LogicalVolume *plugLV = new G4LogicalVolume(plugCon, PMMA, "plugLV", 0, 0, 0);
+	G4ThreeVector plugTV (0,0,(electrode_hz+hz));
+	plugPV = new G4PVPlacement(rotateMatrixDiode, plugTV, "plugPV", plugLV, PVWorld, false, 0);
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////                          /////////////////////////////////////
 	//////////////////////////////////     Region for cuts      /////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,11 +270,13 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	SiDiodeLV->SetRegion(regVol);
 	phantomLV->SetRegion(regVol);
+	plugLV->SetRegion(regVol);
 	PCB_LV->SetRegion(regVol);
 	electrode_LVTop->SetRegion(regVol);
 	electrode_LVBot->SetRegion(regVol);
 	regVol->AddRootLogicalVolume(SiDiodeLV);
 	regVol->AddRootLogicalVolume(phantomLV);
+	regVol->AddRootLogicalVolume(plugLV);
 	regVol->AddRootLogicalVolume(PCB_LV);
 	regVol->AddRootLogicalVolume(electrode_LVTop);
 	regVol->AddRootLogicalVolume(electrode_LVBot);
@@ -263,6 +291,11 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	simpleAlSVisAttOrb->SetVisibility(true);
 	simpleAlSVisAttOrb->SetForceWireframe(true);
 	phantomLV->SetVisAttributes(simpleAlSVisAttOrb);
+
+	G4VisAttributes* simpleAlSVisAttPlug= new G4VisAttributes(G4Colour::Gray());
+	simpleAlSVisAttPlug->SetVisibility(true);
+	simpleAlSVisAttPlug->SetForceSolid(true);
+	plugLV->SetVisAttributes(simpleAlSVisAttPlug);
 
 	G4VisAttributes* simpleAlSVisAtt_PCB= new G4VisAttributes(G4Colour::Green());
 	simpleAlSVisAtt_PCB->SetVisibility(true);

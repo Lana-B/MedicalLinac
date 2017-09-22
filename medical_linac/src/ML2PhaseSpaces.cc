@@ -64,7 +64,7 @@ bool CML2PhaseSpaces::createPlane(G4VPhysicalVolume  *PVWorld, G4String name, G4
 	G4Colour color(0.,1.,1.,0.5);
 	G4VisAttributes* simplePhSpVisAtt= new G4VisAttributes(color);
 	simplePhSpVisAtt->SetVisibility(true);
-	simplePhSpVisAtt->SetForceSolid(true);
+	simplePhSpVisAtt->SetForceWireframe(true);
 	logVol->SetVisAttributes(simplePhSpVisAtt);
 
 
@@ -89,7 +89,7 @@ bool CML2PhaseSpaces::createPlane(G4int idSD_Type, G4int max_N_particles_in_PhSp
 
 	G4VisAttributes* simplePhSpVisAtt= new G4VisAttributes(G4Colour::Red());
 	simplePhSpVisAtt->SetVisibility(true);
-	simplePhSpVisAtt->SetForceSolid(true);
+	simplePhSpVisAtt->SetForceWireframe(true);
 	logVol->SetVisAttributes(simplePhSpVisAtt);
 
 	sensDetParticle=new CML2SDWithParticle(idSD_Type, max_N_particles_in_PhSp_File, seed, nMaxParticlesInRamPhaseSpace, name, PhaseSpaceOutFile, bSavePhaseSpace, bStopAtPhaseSpace, primaryParticleData, accTargetZPosition);
