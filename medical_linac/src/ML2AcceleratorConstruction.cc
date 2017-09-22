@@ -110,12 +110,12 @@ bool CML2AcceleratorConstruction::Construct(G4VPhysicalVolume *PVWorld, G4bool b
 		G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR"); //previously Galactic
 		G4ThreeVector halfSize;
 		initialCentre.set(0.*mm, 0.*mm, -isoCentre);
-		halfSize.set(600.*mm, 600.*mm, 930.*mm);
+		halfSize.set(600.*mm, 600.*mm, 310.*mm);
 		G4Box *accWorldB = new G4Box("accWorldG", halfSize.getX(), halfSize.getY(), halfSize.getZ());
 		G4LogicalVolume *accWorldLV = new G4LogicalVolume(accWorldB, Vacuum, "accWorldL", 0, 0, 0);
 		G4VisAttributes* simpleAlSVisAtt= new G4VisAttributes(G4Colour::White());
-		simpleAlSVisAtt->SetVisibility(false);
-// 		simpleAlSVisAtt->SetForceWireframe(false);
+		simpleAlSVisAtt->SetVisibility(true);
+		simpleAlSVisAtt->SetForceWireframe(true);
 		accWorldLV->SetVisAttributes(simpleAlSVisAtt);
 	
 		PVAccWorld= new G4PVPlacement(0, initialCentre, "acceleratorBox", accWorldLV, PVWorld, false, 0);

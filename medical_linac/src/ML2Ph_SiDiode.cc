@@ -47,7 +47,7 @@ CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
 	multFactor=8;
 	// phantom size and position
-	halfSize.set(30*1.1*multFactor*mm,30*1.1*multFactor*mm,7.5*1.1*multFactor*mm);
+	halfSize.set(60*1.1*multFactor*mm,60*1.1*multFactor*mm,340*mm);
 	// phantom position
 	centre.set(0.,0.,0.);
 }
@@ -126,7 +126,7 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	// G4Orb* phantom
 	// = new G4Orb("phantom", 
 	//             300*mm);
-	G4double hz3 = (2.0*multFactor)*mm;
+	G4double hz3 = (1.8*multFactor)*mm;
 
 	G4Tubs* phantomTop
 	= new G4Tubs("phantomTop",

@@ -129,8 +129,8 @@ bool CML2PhantomConstruction::Construct(G4VPhysicalVolume *PVWorld,
 		G4Box *phmWorldB = new G4Box("phmWorldG", halfPhantomInsideSize.getX(), halfPhantomInsideSize.getY(), halfPhantomInsideSize.getZ());
 		G4LogicalVolume *phmWorldLV = new G4LogicalVolume(phmWorldB, Vacuum, "phmWorldL", 0, 0, 0);
 		G4VisAttributes* simpleAlSVisAtt= new G4VisAttributes(G4Colour::White());
-		simpleAlSVisAtt->SetVisibility(false);
-// 		simpleAlSVisAtt->SetForceWireframe(false);
+		simpleAlSVisAtt->SetVisibility(true);
+		simpleAlSVisAtt->SetForceWireframe(true);
 		phmWorldLV->SetVisAttributes(simpleAlSVisAtt);
 	
 		// G4ThreeVector zTrans(0, 0,200*mm);
