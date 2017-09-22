@@ -102,25 +102,25 @@ private:
 	bool MLC();
 
 	G4VPhysicalVolume * PVWorld;
-        G4VPhysicalVolume *targetA_phys;
-        G4VPhysicalVolume *targetB_phys;
-        G4VPhysicalVolume *UpperCollimator_phys;
-        G4VPhysicalVolume *CylMinusCone_phys;
-        G4VPhysicalVolume *BeWTubePV;
-        G4VPhysicalVolume *FFL1A_1PV;
-        G4VPhysicalVolume *FFL2_1PV;
-        G4VPhysicalVolume *PCUtubeW1PV;
-        G4VPhysicalVolume *PCUtubeP1PV;
-        G4VPhysicalVolume *PCUtubeW2PV;
-        G4VPhysicalVolume *PCUtubeP2PV;
-        G4VPhysicalVolume *PCUtubeW3PV;
-        G4VPhysicalVolume *PCUtubeP3PV;
-        G4VPhysicalVolume *MirrorTubePV;
-        G4VPhysicalVolume *phVol1X;
-        G4VPhysicalVolume *phVol2X;
-        G4VPhysicalVolume *phVol1Y;
-        G4VPhysicalVolume *phVol2Y;
-        G4VPhysicalVolume *leafPhys;
+    G4VPhysicalVolume *targetA_phys;
+    G4VPhysicalVolume *targetB_phys;
+    G4VPhysicalVolume *UpperCollimator_phys;
+    G4VPhysicalVolume *CylMinusCone_phys;
+    G4VPhysicalVolume *BeWTubePV;
+    G4VPhysicalVolume *FFL1A_1PV;
+    G4VPhysicalVolume *FFL2_1PV;
+    G4VPhysicalVolume *PCUtubeW1PV;
+    G4VPhysicalVolume *PCUtubeP1PV;
+    G4VPhysicalVolume *PCUtubeW2PV;
+    G4VPhysicalVolume *PCUtubeP2PV;
+    G4VPhysicalVolume *PCUtubeW3PV;
+    G4VPhysicalVolume *PCUtubeP3PV;
+    G4VPhysicalVolume *MirrorTubePV;
+    G4VPhysicalVolume *phVol1X;
+    G4VPhysicalVolume *phVol2X;
+    G4VPhysicalVolume *phVol1Y;
+    G4VPhysicalVolume *phVol2Y;
+    G4VPhysicalVolume *leafPhys;
 
 };
 

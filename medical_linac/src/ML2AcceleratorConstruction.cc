@@ -107,10 +107,10 @@ bool CML2AcceleratorConstruction::Construct(G4VPhysicalVolume *PVWorld, G4bool b
 	{
 		acceleratorConstructionMessenger->SetReferenceWorld(bOnlyVisio);
 		// create the accelerator-world box
-		G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+		G4Material *Vacuum=G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR"); //previously Galactic
 		G4ThreeVector halfSize;
 		initialCentre.set(0.*mm, 0.*mm, -isoCentre);
-		halfSize.set(600.*mm, 600.*mm, 600.*mm);
+		halfSize.set(600.*mm, 600.*mm, 930.*mm);
 		G4Box *accWorldB = new G4Box("accWorldG", halfSize.getX(), halfSize.getY(), halfSize.getZ());
 		G4LogicalVolume *accWorldLV = new G4LogicalVolume(accWorldB, Vacuum, "accWorldL", 0, 0, 0);
 		G4VisAttributes* simpleAlSVisAtt= new G4VisAttributes(G4Colour::White());
@@ -123,9 +123,9 @@ bool CML2AcceleratorConstruction::Construct(G4VPhysicalVolume *PVWorld, G4bool b
 	// create the actual accelerator
 		if (AcceleratorName=="acc1")
 		{
-			accelerator1->Construct(PVAccWorld, isoCentre);
-			Z_Value_PhaseSpaceBeforeJaws=accelerator1->getBeforeJaws_Z_PhaseSpacePosition();
-			accelerator1->writeInfo();
+			// accelerator1->Construct(PVAccWorld, isoCentre);
+			// Z_Value_PhaseSpaceBeforeJaws=accelerator1->getBeforeJaws_Z_PhaseSpacePosition();
+			// accelerator1->writeInfo();
 		}
 	}
 	else

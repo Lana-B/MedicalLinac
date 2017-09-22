@@ -93,7 +93,7 @@ void CML2PrimaryGenerationAction::design(G4double aTZ)
 
 void CML2PrimaryGenerationAction::setGunRandom()
 {
-	particleGun->SetParticleDefinition(electron);
+	particleGun->SetParticleDefinition(particleGunType);
 	particleGun->SetNumberOfParticles(1);
 	idCurrentParticleSource=idParticleSource;
 }
@@ -145,7 +145,7 @@ void CML2PrimaryGenerationAction::GeneratePrimaries(G4Event *anEvent)
 }
 void CML2PrimaryGenerationAction::GenerateFromRandom()
 {
-	sinTheta=RandGauss::shoot(0., 0.003);
+	sinTheta=RandGauss::shoot(0., 0.05); //previously 0.003
 	cosTheta=std::sqrt(1 - sinTheta*sinTheta);
 	phi=twopi*G4UniformRand();
 	dir.set(sinTheta*std::cos(phi), sinTheta*std::sin(phi), cosTheta);

@@ -79,6 +79,11 @@ CML2PrimaryGenerationActionMessenger::CML2PrimaryGenerationActionMessenger(CML2P
 	GunRadious->SetDefaultUnit("mm");
 	GunRadious->SetDefaultValue(10.);
 	GunRadious->SetGuidance("radious primary particles beam");
+
+	GunParticleType=new G4UIcmdWithAString("/primaryParticleData/GunParticleType", this);
+	GunParticleType->SetDefaultValue("electron");
+	pML2PrimaryGenerationAction->setParticleType("electron");
+	GunParticleType->SetGuidance("particle type for incoming beam");
 }
 
 CML2PrimaryGenerationActionMessenger::~CML2PrimaryGenerationActionMessenger(void)
@@ -125,7 +130,12 @@ void CML2PrimaryGenerationActionMessenger::SetNewValue(G4UIcommand* cmd, G4Strin
 	{pML2PrimaryGenerationAction->setCalculatedPhaseSpaceFileIN(newValue);}
 
 	if (cmd==sourceTypeName)
-	{pML2PrimaryGenerationAction->setSourceTypeName(newValue);}
-
+	{
+		pML2PrimaryGenerationAction->setSourceTypeName(newValue);
+	}
+	if (cmd==GunParticleType)
+	{
+		pML2PrimaryGenerationAction->setParticleType(newValue);
+	}
 
 }
