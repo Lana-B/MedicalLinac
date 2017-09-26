@@ -89,7 +89,7 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	innerRadius = (0.*multFactor);
 	outerRadius = (1.5*multFactor);
-	hz =(0.05*multFactor);
+	hz =(0.3*multFactor); //was 0.5
 	startAngle = 0.*deg;
 	spanningAngle = 360.*deg;
 
