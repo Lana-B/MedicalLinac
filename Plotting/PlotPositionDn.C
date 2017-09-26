@@ -2,7 +2,7 @@
 	TChain chain("T");
 	for(int files=101; files<1100; files++){
 		string fileNum = static_cast<ostringstream*>( &(ostringstream() << files) )->str();
-		string fileName = "/hdfs/user/lb8075/MedLinac/Output_170926_p3Diode/medLinacOutputSinglewPhantom_" + fileNum + ".root";
+		string fileName = ("/hdfs/user/lb8075/MedLinac/Output_170926_p3Diode/medLinacOutputSinglewPhantom_" + fileNum + ".root").c_str();
 		chain.Add(fileName);
 	}
 
