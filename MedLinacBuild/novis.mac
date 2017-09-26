@@ -15,10 +15,11 @@
 
 ### Phase space
 
+
 /general/centrePhaseSpace 0 0 550 mm                   # position of the centre of the plane phase space
 /general/halfSizePhaseSpace 200 200 1 mm              # half size of the plane phase space
 /general/bSavePhaseSpace true                         # true if to save the phase space
-/general/bStopAtPhaseSpace true                       # true if to kill the particle at the phase space
+/general/bStopAtPhaseSpace false                       # true if to kill the particle at the phase space
 /general/PhaseSpaceOutFile PhSp_Acc1                   # full file name of the phase space
 /general/bForcePhaseSpaceBeforeJaws true
 
@@ -31,7 +32,7 @@
 ### Number of primary events
 
 
-/general/nBeam 1000                                 # number of events to run
+/general/nBeam 1000                                # number of events to run
 
 
 ### NUMBER STORED  
@@ -46,20 +47,19 @@
 
 /primaryParticleData/nMaxParticlesInRamPhaseSpace 1000 # maximum particle number loaded from the phase space file each time
 /primaryParticleData/nIdenticalParticles 1             # number of identical particles generated in the primary generator  
-/primaryParticleData/GunMeanEnegy 6 MeV                # mean energy of the primary particles 
-/primaryParticleData/GunStdEnegy 0.127 MeV             # std energy of the primary particles 
-/primaryParticleData/GunRadious 0.5 mm                 # radious primary particles beam
+/primaryParticleData/GunMeanEnegy 2 MeV                # mean energy of the primary particles 
+/primaryParticleData/GunStdEnegy 0.10 MeV             # std energy of the primary particles 
+/primaryParticleData/GunRadious 10 mm                 # radious primary particles beam
 /primaryParticleData/sourceTypeName randomTarget       # type of particle generator source
-/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
-
+#/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
+/primaryParticleData/GunParticleType gamma
 ### PHANTOM
 
 /phantom/PhantomName SiDiode				# phantom name to select among those implemented
 #/phantom/PhantomName fullWater				# phantom name to select among those implemented
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 #/phantom/centre 0 0 -200 # phantom centre coordinates in the world [mm]
-/Step/waterPhantomStepMax 1 mm 
-
+/step/waterPhantomStepMax 1  mm
 ### ACCELERATOR
 
 /accelerator/AcceleratorName acc1			# accelerator name to select among those implemented 
