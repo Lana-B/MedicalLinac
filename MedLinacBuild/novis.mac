@@ -32,7 +32,7 @@
 ### Number of primary events
 
 
-/general/nBeam 1000                                # number of events to run
+/general/nBeam 10000                                # number of events to run
 
 
 ### NUMBER STORED  
@@ -52,14 +52,15 @@
 /primaryParticleData/GunRadious 10 mm                 # radious primary particles beam
 /primaryParticleData/sourceTypeName randomTarget       # type of particle generator source
 #/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
-/primaryParticleData/GunParticleType gamma
+/primaryParticleData/GunParticleType gamma### PHANTOM
 ### PHANTOM
 
 /phantom/PhantomName SiDiode				# phantom name to select among those implemented
 #/phantom/PhantomName fullWater				# phantom name to select among those implemented
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 #/phantom/centre 0 0 -200 # phantom centre coordinates in the world [mm]
-/step/waterPhantomStepMax 1  mm
+/Step/waterPhantomStepMax 1 mm
+
 ### ACCELERATOR
 
 /accelerator/AcceleratorName acc1			# accelerator name to select among those implemented 
