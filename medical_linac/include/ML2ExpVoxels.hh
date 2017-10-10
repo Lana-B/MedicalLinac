@@ -69,9 +69,9 @@ public:
 private:
 	void saveHeader();
 	void calculateNormalizedEd(std::vector <Svoxel> &voxels);
-        std::vector <Svoxel> voxels;
-        G4int *nVoxelsgeometry;
-        G4ThreeVector minZone, maxZone;
+    std::vector <Svoxel> voxels;
+    G4int *nVoxelsgeometry;
+    G4ThreeVector minZone, maxZone;
 	G4int nCurves;
 	G4int *startCurve, *stopCurve;
 	G4double *chi2Factor;

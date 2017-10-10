@@ -41,11 +41,16 @@
 //*******************************************************//
 
 #include "ML2PrimaryGenerationAction.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "globals.hh"
+#include "G4Event.hh"
+#include "G4GeneralParticleSource.hh"
 
 using namespace CLHEP;
 
 CML2PrimaryGenerationAction::CML2PrimaryGenerationAction(void)
-:particleGun(0),gamma(0),electron(0),positron(0),primaryParticleData(0),particles(0)
+:fParticleGun(0),particleGun(0),gamma(0),electron(0),positron(0),primaryParticleData(0),particles(0)
 {
 }
 CML2PrimaryGenerationAction* CML2PrimaryGenerationAction::instance = 0;
@@ -70,7 +75,23 @@ void CML2PrimaryGenerationAction::inizialize(SPrimaryParticle *pData)
 	gamma=particleTable->FindParticle("gamma");
 	electron=particleTable->FindParticle("e-");
 	positron=particleTable->FindParticle("e+");
+
+	// switch (idCurrentParticleSource)
+	// {
+	// case id_randomTarget:
+	// 	particleGun=new G4ParticleGun();
+	// 	break;
+	// case id_phaseSpace:
+	// 	particleGun=new G4ParticleGun();
+	// 	break;
+	// case id_GPS:
+	// 	fParticleGun=new G4GeneralParticleSource();
+	// 	break;
+	// }
+	fParticleGun=new G4GeneralParticleSource();
+
 	particleGun=new G4ParticleGun();
+	
 
 	primaryParticleData=pData;
 	primaryParticleData->nPrimaryParticle=0;
@@ -107,7 +128,11 @@ void CML2PrimaryGenerationAction::setGunCalculatedPhaseSpace()
 
 CML2PrimaryGenerationAction::~CML2PrimaryGenerationAction(void)
 {
-	delete particleGun;
+	if(id_GPS){
+		delete fParticleGun;
+	}
+	else{delete particleGun;}
+	
 	delete [] particles;
 	delete particles;
 }
@@ -126,22 +151,33 @@ void CML2PrimaryGenerationAction::GeneratePrimaries(G4Event *anEvent)
 		case id_phaseSpace:
 				GenerateFromCalculatedPhaseSpace();
 			break;
+		case id_GPS:
+			break;	
 		}
 		pos0=pos;
 		dir0=dir;
 	}
 	currentRecycle++;
-	pos=pos0;
-	dir=dir0;
-	applySourceRotation(); // to follow the accelerator rotation
 
-	primaryParticleData->partPDGE=particleGun->GetParticleDefinition()->GetPDGEncoding();
-	primaryParticleData->nPrimaryParticle++;
+	if(id_GPS){
+		fParticleGun->GeneratePrimaryVertex(anEvent);
+	}
+	else{
 
-	particleGun->SetParticleEnergy(ek*MeV);
-	particleGun->SetParticlePosition(pos*mm);
-	particleGun->SetParticleMomentumDirection((G4ParticleMomentum)dir);
-	particleGun->GeneratePrimaryVertex(anEvent);
+		pos=pos0;
+		dir=dir0;
+		applySourceRotation(); // to follow the accelerator rotation
+
+		primaryParticleData->partPDGE=particleGun->GetParticleDefinition()->GetPDGEncoding();
+		primaryParticleData->nPrimaryParticle++;
+
+		particleGun->SetParticleEnergy(ek*MeV);
+		particleGun->SetParticlePosition(pos*mm);
+		particleGun->SetParticleMomentumDirection((G4ParticleMomentum)dir);
+		particleGun->GeneratePrimaryVertex(anEvent);
+	}
+
+
 }
 void CML2PrimaryGenerationAction::GenerateFromRandom()
 {
@@ -159,6 +195,27 @@ void CML2PrimaryGenerationAction::GenerateFromRandom()
 	ek=RandGauss::shoot(GunMeanEnegy, GunStdEnegy);
 	nRandomParticles++;
 }
+
+// void CML2PrimaryGenerationAction::GenerateFromGPS()
+// {  
+// 	fParticleGun->GeneratePrimaryVertex(anEvent);
+
+
+// 	// sinTheta=RandGauss::shoot(0., 0.05); //previously 0.003
+// 	// cosTheta=std::sqrt(1 - sinTheta*sinTheta);
+// 	// phi=twopi*G4UniformRand();
+// 	// dir.set(sinTheta*std::cos(phi), sinTheta*std::sin(phi), cosTheta);
+
+// 	// ro=G4UniformRand()*GunRadious; 
+// 	// alfa=G4UniformRand()*twopi;
+
+// 	// pos.setX(ro*std::sin(alfa));
+// 	// pos.setY(ro*std::cos(alfa));
+// 	// pos.setZ(-(accTargetZPosition +5.)*mm); // the primary electrons are generated 5 mm before the target
+// 	// ek=RandGauss::shoot(GunMeanEnegy, GunStdEnegy);
+// 	// nRandomParticles++;
+// }
+
 void CML2PrimaryGenerationAction::GenerateFromCalculatedPhaseSpace()
 {
 	static bool bFirstTime=true;

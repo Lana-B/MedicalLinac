@@ -82,9 +82,12 @@ CML2SDWithVoxels::CML2SDWithVoxels(G4String name, G4int voxSave,
 		NumberOfVoxelsAlongX=NumVX;
 		NumberOfVoxelsAlongY=NumVY;
 		NumberOfVoxelsAlongZ=NumVZ;
-		halfXVoxelDimensionX=halfSize.getX()/NumberOfVoxelsAlongX;
-		halfXVoxelDimensionY=halfSize.getY()/NumberOfVoxelsAlongY;
-		halfXVoxelDimensionZ=halfSize.getZ()/NumberOfVoxelsAlongZ;
+		// halfXVoxelDimensionX=halfSize.getX()/NumberOfVoxelsAlongX;
+		// halfXVoxelDimensionY=halfSize.getY()/NumberOfVoxelsAlongY;
+		// halfXVoxelDimensionZ=halfSize.getZ()/NumberOfVoxelsAlongZ;
+		halfXVoxelDimensionX=1*mm;
+		halfXVoxelDimensionY=1*mm;
+		halfXVoxelDimensionZ=1*mm;
 
 		voxelVolume=halfXVoxelDimensionX*halfXVoxelDimensionY*halfXVoxelDimensionZ*8.;
 
@@ -181,7 +184,7 @@ G4bool CML2SDWithVoxels::ProcessHits(G4Step *aStep, G4TouchableHistory *ROHist)
 
 	if (bActive)
 	{
-		G4double energyDep = aStep->GetTotalEnergyDeposit();
+		energyDep = aStep->GetTotalEnergyDeposit();
 		if (bSaveROG && energyDep>0.) 
 		{
 
@@ -212,10 +215,13 @@ G4bool CML2SDWithVoxels::ProcessHits(G4Step *aStep, G4TouchableHistory *ROHist)
 			nTotalEvents++;
 			nSingleTotalEvents++;
 
+			vecEnDep.push_back(energyDep);
+			vecEnDep2.push_back(energyDep*energyDep);
+
 			if(nTotalEvents%100==0){
 				// std::cout<<"total: "<<nTotalEvents<<std::endl;
 			}
-			saveRoot();
+			// saveRoot(energyDep);
 			if (nTotalEvents%saving_in_ROG_Voxels_every_events==0 && nTotalEvents>0)
 			{
 				std::cout<<"SAVE!!!\n\n\n"<<std::endl;
@@ -300,34 +306,20 @@ void CML2SDWithVoxels::saveRoot()
 {
 	auto analysisManager = G4AnalysisManager::Instance();
 
-	for (int ix=0; ix< NumberOfVoxelsAlongX; ix++)
+	if (vecX.size()>0)
 	{
-		for (int iy=0; iy< NumberOfVoxelsAlongY; iy++)
-		{
-			for (int iz=0; iz< NumberOfVoxelsAlongZ; iz++)
-			{
-				if (voxelsSingle[ix][iy][iz].nEvents>0)
-				{
-					// std::cout<<"fill"<<std::endl;
-					analysisManager->FillNtupleDColumn(0, voxelsSingle[ix][iy][iz].volumeId);
-					analysisManager->FillNtupleDColumn(1, voxelsSingle[ix][iy][iz].pos.getX()/mm);
-					analysisManager->FillNtupleDColumn(2, voxelsSingle[ix][iy][iz].pos.getY()/mm);
-					analysisManager->FillNtupleDColumn(3, voxelsSingle[ix][iy][iz].pos.getZ()/mm);
-					analysisManager->FillNtupleDColumn(4, ix);
-					analysisManager->FillNtupleDColumn(5, iy);
-					analysisManager->FillNtupleDColumn(6, iz);
-					analysisManager->FillNtupleDColumn(7, voxelsSingle[ix][iy][iz].depEnergy/(joule/kg));
-					analysisManager->FillNtupleDColumn(8, voxelsSingle[ix][iy][iz].depEnergy2/((joule/kg)*(joule/kg)));
-					analysisManager->FillNtupleIColumn(9, voxelsSingle[ix][iy][iz].nEvents);
-					analysisManager->FillNtupleDColumn(10, vecPosX);
-					analysisManager->FillNtupleDColumn(11, vecPosY);
-					analysisManager->FillNtupleIColumn(12, vecPosZ);
-					analysisManager->AddNtupleRow();  
-					// std::cout << "\n !!!\n !!!\n !!!nEvents>0!!! \n !!!\n!!! \n";
-				}
-			}
+		for(int hitCount=0; hitCount<(int)vecX.size(); hitCount++){
+			// std::cout<<"fill"<<std::endl;
+			analysisManager->FillNtupleDColumn(0, vecX[hitCount]);
+			analysisManager->FillNtupleDColumn(1, vecY[hitCount]);
+			analysisManager->FillNtupleDColumn(2, vecZ[hitCount]);
+			analysisManager->FillNtupleDColumn(3, vecEnDep[hitCount]/(joule/kg));
+			analysisManager->FillNtupleDColumn(4, vecEnDep[hitCount]/((joule/kg)*(joule/kg)));
+			analysisManager->AddNtupleRow();  
+			// std::cout << "\n !!!\n !!!\n !!!nEvents>0!!! \n !!!\n!!! \n";
 		}
 	}
+
 }
 
 void CML2SDWithVoxels::setFullOutFileDataSingle(G4String val)

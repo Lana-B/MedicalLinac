@@ -52,6 +52,7 @@
 
 CML2PhantomConstructionMessenger::CML2PhantomConstructionMessenger(CML2PhantomConstruction *phantomConstructor) : pPhantomConstructor (phantomConstructor)
 {
+
 	PhantomName=new G4UIcmdWithAString("/phantom/PhantomName",this);
 	// PhantomName->SetDefaultValue("fullWater");
 	PhantomName->SetDefaultValue("SiDiode");

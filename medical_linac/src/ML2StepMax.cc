@@ -87,9 +87,12 @@ G4double ML2StepMax::PostStepGetPhysicalInteractionLength(const G4Track& aTrack,
   
   G4double ProposedStep = DBL_MAX;
 
-  if((MaxChargedStep > 0.) &&
-     (aTrack.GetVolume() != 0) &&
-     (aTrack.GetVolume()->GetName() == "DetectorPhys"))
+  if(
+      (MaxChargedStep > 0.) &&
+      (aTrack.GetVolume() != 0)
+      && (aTrack.GetVolume()->GetName() == "SiDiodePV" || aTrack.GetVolume()->GetName() == "phantomPV" || 
+        aTrack.GetVolume()->GetName() == "PCB_PV" ||aTrack.GetVolume()->GetName() == "plugPV"  )
+    )
      ProposedStep = MaxChargedStep;
 
   return ProposedStep;

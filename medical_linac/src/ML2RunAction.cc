@@ -60,19 +60,26 @@ CML2RunAction::CML2RunAction(CML2Convergence *conv, G4int nB, G4bool bOV, int iS
     G4cout << "Using " << analysisManager->GetType() << G4endl;
 
     analysisManager->CreateNtuple("medLinac", "medL");
-    analysisManager->CreateNtupleDColumn("Vol");  // column Id = 0
-    analysisManager->CreateNtupleDColumn("xLoc");  // column Id = 1
-    analysisManager->CreateNtupleDColumn("yLoc");  // column Id = 2
-    analysisManager->CreateNtupleDColumn("zLoc"); // column Id = 3
-    analysisManager->CreateNtupleDColumn("ix"); // column Id = 4
-    analysisManager->CreateNtupleDColumn("iy");    // column Id = 5
-    analysisManager->CreateNtupleDColumn("iz");    // column Id = 6
-    analysisManager->CreateNtupleDColumn("Dose"); // column Id = 7
-    analysisManager->CreateNtupleDColumn("Dose2");    // column Id = 8
-    analysisManager->CreateNtupleIColumn("nEvents");    // column Id = 9
-    analysisManager->CreateNtupleDColumn("xPos"); // column Id = 10
-    analysisManager->CreateNtupleDColumn("yPos");    // column Id = 11
-    analysisManager->CreateNtupleIColumn("zPos");    // column Id = 12
+    // analysisManager->CreateNtupleDColumn("Vol");  // column Id = 0
+    // analysisManager->CreateNtupleDColumn("xLoc");  // column Id = 1
+    // analysisManager->CreateNtupleDColumn("yLoc");  // column Id = 2
+    // analysisManager->CreateNtupleDColumn("zLoc"); // column Id = 3
+    // analysisManager->CreateNtupleDColumn("ix"); // column Id = 4
+    // analysisManager->CreateNtupleDColumn("iy");    // column Id = 5
+    // analysisManager->CreateNtupleDColumn("iz");    // column Id = 6
+    // analysisManager->CreateNtupleDColumn("Dose"); // column Id = 7
+    // analysisManager->CreateNtupleDColumn("Dose2");    // column Id = 8
+    // analysisManager->CreateNtupleIColumn("nEvents");    // column Id = 9
+    // analysisManager->CreateNtupleDColumn("xPos"); // column Id = 10
+    // analysisManager->CreateNtupleDColumn("yPos");    // column Id = 11
+    // analysisManager->CreateNtupleDColumn("zPos");    // column Id = 12
+    
+    analysisManager->CreateNtupleDColumn("xPos"); // column Id = 0
+    analysisManager->CreateNtupleDColumn("yPos");    // column Id = 1
+    analysisManager->CreateNtupleDColumn("zPos");    // column Id = 2
+    analysisManager->CreateNtupleDColumn("Dose"); // column Id = 3
+    analysisManager->CreateNtupleDColumn("Dose2");    // column Id = 4
+
     analysisManager->FinishNtuple();
 }
 

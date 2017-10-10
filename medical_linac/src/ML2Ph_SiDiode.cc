@@ -45,9 +45,9 @@
 
 CML2Ph_SiDiode::CML2Ph_SiDiode()
 {
-	multFactor=8;
+	multFactor=1;
 	// phantom size and position
-	halfSize.set(60*1.1*multFactor*mm,60*1.1*multFactor*mm,340*mm);
+	halfSize.set(40*1.1*multFactor*mm,40*1.1*multFactor*mm,340*mm);
 	// phantom position
 	centre.set(0.,0.,0.);
 }
@@ -69,6 +69,84 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	G4NistManager* man = G4NistManager::Instance();  //creating material manager
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////                   //////////////////////////////////////////
+	////////////////////////////////////////   Build Phantom   //////////////////////////////////////////
+	////////////////////////////////////////                   //////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//Epoxy (for phantom and building FR4 )
+	G4int natoms, ncomponents;
+
+	A = 1.01*g/mole;
+	G4Element* elH = new G4Element ("Hydrogen","H",Z = 1.,A);
+
+	A = 56*g/mole;
+	G4Element* elPb = new G4Element ("Lead","Pb",Z = 28.,A);
+
+	A = 12.011*g/mole;
+	G4Element* elC = new G4Element("Carbon","C",Z = 6.,A);  
+	G4double density = 1.2*g/cm3;
+	G4Material* Epoxy = new G4Material("Epoxy" , density, ncomponents=2);
+	Epoxy->AddElement(elH, natoms=2);
+	Epoxy->AddElement(elC, natoms=2);
+
+	phantomRadiusInner = (0*multFactor)*mm;
+	phantomRadiusOuter = (3.5*multFactor)*mm;
+	phantomHeight = (12.5*multFactor)*mm;
+	startAngle2 = 0.*deg;
+	spanningAngle2 = 360.*deg;
+
+	G4Tubs* phantomSides
+	= new G4Tubs("phantomSides", phantomRadiusInner, phantomRadiusOuter, phantomHeight, startAngle2, spanningAngle2);
+
+	// G4double hz3 = (1.8*multFactor)*mm;
+
+	// G4Tubs* phantomTop
+	// = new G4Tubs("phantomTop",
+	//              0*mm, 
+	//              outerRadius2,
+	//              hz3,
+	//              startAngle2, 
+	//              spanningAngle2);
+
+
+
+	A = 16.00*g/mole;
+	G4Element* elO = new G4Element("Oxygen","O",Z = 8.,A);
+	G4Element* elSi = new G4Element("Silicon","Si" , Z= 14., A= 28.09*g/mole);
+
+	// G4double d= 1.18*g/cm3;
+	// G4Material* PMMA = new G4Material("Polimetilmetacrilato",d,ncomponents=3);
+	// // G4Material *PMMA=G4NistManager::Instance()->FindOrBuildMaterial("G4_LUNG_ICRP"); // changable
+
+	// PMMA->AddElement(elC, natoms=5);
+	// PMMA->AddElement(elH, natoms=8);
+	// PMMA->AddElement(elO, natoms=2);
+
+	// G4RotationMatrix *rotateMatrixEmptyPhantom=new G4RotationMatrix();
+ //    // G4ThreeVector zTransPhantom(0, 0, -(175)*mm);
+ //    G4ThreeVector zTransPhantom(0, 0, -(phantomHeight-hz3)*mm);
+
+	//  //---------rotation matrix for phantom --------
+
+	G4RotationMatrix*  rotateMatrixDiode=new G4RotationMatrix();
+	// // rotateMatrixDiode->rotateX(90.0*deg);
+	// // rotateMatrixDiode->rotateY(-45.0*deg);
+	// G4UnionSolid* phantomAdd =
+ //    new G4UnionSolid("Diode", phantomSides, phantomTop, rotateMatrixEmptyPhantom, zTransPhantom);
+
+	//siDiodeHalfHeight
+    pDz = (0.5*multFactor)*mm;
+    G4double depthOfPhantomAboveDiode = 1*mm;
+	G4double electrode_hz =(0.0001*multFactor)*mm;
+
+    G4ThreeVector zTransPhantom(0, 0, (phantomHeight-pDz-(2*electrode_hz)-depthOfPhantomAboveDiode));
+
+	G4LogicalVolume *phantomLV = new G4LogicalVolume(phantomSides, Epoxy, "SiDiodePhantomLV", 0, 0, 0);
+	phantomPV = new G4PVPlacement(rotateMatrixDiode, zTransPhantom, "phantomPV", phantomLV, PVWorld, false, 0);
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
 	//////////////////////////////////  Building silicon diode  /////////////////////////////////////
@@ -81,94 +159,56 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
     pRmax1 = (1.5*multFactor)*mm;
     pRmin2 = (1.2*multFactor)*mm;
     pRmax2 = (1.5*multFactor)*mm;
-    pDz = (2.5*multFactor)*mm;
+    // pDz = (0.5*multFactor)*mm;
     pSPhi = 0.*deg;
     pDPhi = 360.*deg;
 
-	G4Cons* SiDiodeLVSides = new G4Cons("subCone", pRmin1, pRmax1, pRmin2, pRmax2, pDz, pSPhi, pDPhi);
+	G4Cons* SiDiodeConsSides = new G4Cons("subCone", pRmin1, pRmax1, pRmin2, pRmax2, pDz, pSPhi, pDPhi);
 
-	innerRadius = (0.*multFactor);
-	outerRadius = (1.5*multFactor);
-	hz =(0.3*multFactor); //was 0.5
+	//integrated top
+
+	// innerRadius = (0.*multFactor)*mm;
+	// outerRadius = (2.5*multFactor)*mm;
+	// hz =(0.005*multFactor)*mm; // 10 micron thick
+	// startAngle = 0.*deg;
+	// spanningAngle = 360.*deg;
+
+	// G4Tubs* SiDiodeTubTop = new G4Tubs("siTube", innerRadius, outerRadius,hz, startAngle, spanningAngle);
+
+	// G4RotationMatrix *rotateMatrixEmpty = new G4RotationMatrix();
+ //    G4ThreeVector zTrans(0, 0,-(pDz-hz));
+ //    // G4ThreeVector zTrans(0, 0,0);
+
+	// G4UnionSolid* SiDiodeAdd = new G4UnionSolid("Diode", SiDiodeConsSides, SiDiodeTubTop, rotateMatrixEmpty, zTrans);
+	// G4LogicalVolume *SiDiodeLV = new G4LogicalVolume(SiDiodeAdd, SiMat, "SiDiodeLV", 0, 0, 0);
+	// // G4RotationMatrix*  rotateMatrixDiode=new G4RotationMatrix();
+	// // rotateMatrixDiode->rotateX(90.0*deg);
+	// // rotateMatrixDiode->rotateY(-45.0*deg);////////////////////
+
+	// // SiDiodePV = new G4PVPlacement(rotateMatrixDiode, zTrans, "SiDiodePV", SiDiodeLV, PVWorld, false, 0);
+	// SiDiodePV = new G4PVPlacement(rotateMatrixDiode, centre, "SiDiodePV", SiDiodeLV, phantomPV, false, 0);
+
+	//separate top
+
+	innerRadius = (0.*multFactor)*mm;
+	outerRadius = ((pRmin1))*mm;
+	hz =(0.25*multFactor)*mm; // 10 micron thick = 0.005
 	startAngle = 0.*deg;
 	spanningAngle = 360.*deg;
 
-	G4Tubs* SiDiodeLVTop = new G4Tubs("siTube", innerRadius, outerRadius,hz, startAngle, spanningAngle);
+	G4Tubs* SiDiodeTubTop = new G4Tubs("siTube", innerRadius, outerRadius,hz, startAngle, spanningAngle);
 
 	G4RotationMatrix *rotateMatrixEmpty = new G4RotationMatrix();
     G4ThreeVector zTrans(0, 0,-(pDz-hz));
-    // G4ThreeVector zTrans(0, 0,0);
 
-	G4UnionSolid* SiDiodeAdd = new G4UnionSolid("Diode", SiDiodeLVSides, SiDiodeLVTop, rotateMatrixEmpty, zTrans);
-	G4LogicalVolume *SiDiodeLV = new G4LogicalVolume(SiDiodeAdd, SiMat, "SiDiodeLV", 0, 0, 0);
-	G4RotationMatrix*  rotateMatrixDiode=new G4RotationMatrix();
-	// rotateMatrixDiode->rotateX(90.0*deg);
-	// rotateMatrixDiode->rotateY(-45.0*deg);////////////////////
+    //legs
+	G4LogicalVolume *SiDiodeSidesLV = new G4LogicalVolume(SiDiodeConsSides, SiMat, "SiDiodeSidesLV", 0, 0, 0);
+	SiDiodeSidesPV = new G4PVPlacement(rotateMatrixDiode, centre, "SiDiodeSidesPV", SiDiodeSidesLV, phantomPV, false, 0);
 
-	// SiDiodePV = new G4PVPlacement(rotateMatrixDiode, zTrans, "SiDiodePV", SiDiodeLV, PVWorld, false, 0);
-	SiDiodePV = new G4PVPlacement(rotateMatrixDiode, centre, "SiDiodePV", SiDiodeLV, PVWorld, false, 0);
+	//top
+	G4LogicalVolume *SiDiodeLV = new G4LogicalVolume(SiDiodeTubTop, SiMat, "SiDiodeLV", 0, 0, 0);
+	SiDiodePV = new G4PVPlacement(rotateMatrixDiode, zTrans, "SiDiodePV", SiDiodeLV, phantomPV, false, 0);
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////                   //////////////////////////////////////////
-	////////////////////////////////////////   Build Phantom   //////////////////////////////////////////
-	////////////////////////////////////////                   //////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	innerRadius2 = (1.7*multFactor)*mm;
-	outerRadius2 = (4*multFactor)*mm;
-	hz2 = (7.5*multFactor)*mm;
-	startAngle2 = 0.*deg;
-	spanningAngle2 = 360.*deg;
-
-	G4Tubs* phantomSides
-	= new G4Tubs("phantomSides", innerRadius2, outerRadius2, hz2, startAngle2, spanningAngle2);
-
-	// G4Orb* phantom
-	// = new G4Orb("phantom", 
-	//             300*mm);
-	G4double hz3 = (1.8*multFactor)*mm;
-
-	G4Tubs* phantomTop
-	= new G4Tubs("phantomTop",
-	             0*mm, 
-	             outerRadius2,
-	             hz3,
-	             startAngle2, 
-	             spanningAngle2);
-
-	A = 1.01*g/mole;
-	G4Element* elH = new G4Element ("Hydrogen","H",Z = 1.,A);
-
-	A = 12.011*g/mole;
-	G4Element* elC = new G4Element("Carbon","C",Z = 6.,A);  
-
-	A = 16.00*g/mole;
-	G4Element* elO = new G4Element("Oxygen","O",Z = 8.,A);
-	G4Element* elSi = new G4Element("Silicon","Si" , Z= 14., A= 28.09*g/mole);
-
-	G4double d= 1.18*g/cm3;
-	G4int natoms, ncomponents;
-	G4Material* PMMA = new G4Material("Polimetilmetacrilato",d,ncomponents=3);
-	// G4Material *PMMA=G4NistManager::Instance()->FindOrBuildMaterial("G4_LUNG_ICRP"); // changable
-
-	PMMA->AddElement(elC, natoms=5);
-	PMMA->AddElement(elH, natoms=8);
-	PMMA->AddElement(elO, natoms=2);
-
-	G4RotationMatrix *rotateMatrixEmptyPhantom=new G4RotationMatrix();
-    // G4ThreeVector zTransPhantom(0, 0, -(175)*mm);
-    G4ThreeVector zTransPhantom(0, 0, -(hz2-hz3)*mm);
-
-	 //---------rotation matrix for phantom --------
-
-	// G4RotationMatrix*  rotateMatrixDiode=new G4RotationMatrix();
-	// rotateMatrixDiode->rotateX(90.0*deg);
-	// rotateMatrixDiode->rotateY(-45.0*deg);
-	G4UnionSolid* phantomAdd =
-    new G4UnionSolid("Diode", phantomSides, phantomTop, rotateMatrixEmptyPhantom, zTransPhantom);
-
-	G4LogicalVolume *phantomLV = new G4LogicalVolume(phantomAdd, PMMA, "SiDiodePhantomLV", 0, 0, 0);
-	phantomPV = new G4PVPlacement(rotateMatrixDiode, centre, "phantomPV", phantomLV, PVWorld, false, 0);
 
 
 
@@ -183,11 +223,6 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	//from http://www.physi.uni-heidelberg.de/~adler/TRD/TRDunterlagen/RadiatonLength/tgc2.htm
 	// http://www.phenix.bnl.gov/~suhanov/ncc/geant/rad-source/src/ExN03DetectorConstruction.cc
 
-	//Epoxy (for FR4 )
-	G4double density = 1.2*g/cm3;
-	G4Material* Epoxy = new G4Material("Epoxy" , density, ncomponents=2);
-	Epoxy->AddElement(elH, natoms=2);
-	Epoxy->AddElement(elC, natoms=2);
 
 	G4Material* SiO2 = 
 	new G4Material("quartz",density= 2.200*g/cm3, ncomponents=2);
@@ -201,14 +236,14 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	FR4->AddMaterial(SiO2, fractionmass=0.528);
 	FR4->AddMaterial(Epoxy, fractionmass=0.472);
 	
-	G4double PCB_xDim = (30*multFactor)*mm;
-	G4double PCB_yDim = (30*multFactor)*mm;
+	G4double PCB_xDim = (2*multFactor)*mm;
+	G4double PCB_yDim = (2*multFactor)*mm;
 	G4double PCB_zDim = (0.5*multFactor)*mm;
 
 	G4Box *PCBBox = new G4Box("PCBBox", PCB_xDim, PCB_yDim, PCB_zDim);
 	G4LogicalVolume *PCB_LV = new G4LogicalVolume(PCBBox, FR4, "PCB_LV", 0, 0, 0);
-	G4ThreeVector PCB_TV (0,0,(hz2+PCB_zDim)*1.01);
-	PCB_PV = new G4PVPlacement(0, PCB_TV, "PCB_PV", PCB_LV, PVWorld, false, 0);
+	G4ThreeVector PCB_TV (0,0,(pDz+PCB_zDim));
+	PCB_PV = new G4PVPlacement(0, PCB_TV, "PCB_PV", PCB_LV, phantomPV, false, 0);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
@@ -219,9 +254,9 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	G4Material* AuMat = man->FindOrBuildMaterial("G4_Au");
 
-	G4double electrode_innerR = (0.*multFactor)*mm;
+	G4double electrode_innerR = 0*mm;
 	G4double electrode_outerR = pRmin1*0.8;
-	G4double electrode_hz =(0.5*multFactor)*mm;
+	// G4double electrode_hz =(0.5*multFactor)*mm;
 	G4double el_startAngle = 0.*deg;
 	G4double el_spanningAngle = 360.*deg;
 
@@ -229,11 +264,11 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	G4LogicalVolume *electrode_LVTop = new G4LogicalVolume(electrode_Tubs, AuMat, "electrode_LVTop", 0, 0, 0);
 	G4ThreeVector electrode_TVTop (0,0,(-(pDz+electrode_hz+0.01)));
-	electrode_PVTop = new G4PVPlacement(0, electrode_TVTop, "electrode_PVTop", electrode_LVTop, PVWorld, false, 0);
+	electrode_PVTop = new G4PVPlacement(0, electrode_TVTop, "electrode_PVTop", electrode_LVTop, phantomPV, false, 0);
 
 	G4LogicalVolume *electrode_LVBot = new G4LogicalVolume(electrode_Tubs, AuMat, "electrode_LVBot", 0, 0, 0);
 	G4ThreeVector electrode_TVBot (0,0,(-(pDz-hz-hz-electrode_hz-0.01)));
-	electrode_PVBot = new G4PVPlacement(0, electrode_TVBot, "electrode_PVBot", electrode_LVBot, PVWorld, false, 0); 
+	electrode_PVBot = new G4PVPlacement(0, electrode_TVBot, "electrode_PVBot", electrode_LVBot, phantomPV, false, 0); 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////                          /////////////////////////////////////
@@ -243,18 +278,18 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    plugRmin1 = (0.0*multFactor)*mm;
-    plugRmax1 = (1.0*multFactor*0.97)*mm;
-    plugRmin2 = (0.0*multFactor)*mm;
-    plugRmax2 = (1.2*multFactor*0.97)*mm;
-    plugDz = ((pDz-hz-electrode_hz)*0.97);
-    plugSPhi = 0.*deg;
-    plugDPhi = 360.*deg;
+ //    plugRmin1 = (0.0*multFactor)*mm;
+ //    plugRmax1 = (1.0*multFactor*0.97)*mm;
+ //    plugRmin2 = (0.0*multFactor)*mm;
+ //    plugRmax2 = (1.2*multFactor*0.97)*mm;
+ //    plugDz = ((pDz-hz-electrode_hz)*0.97);
+ //    plugSPhi = 0.*deg;
+ //    plugDPhi = 360.*deg;
 
-	G4Cons* plugCon = new G4Cons("plugCone", plugRmin1, plugRmax1, plugRmin2, plugRmax2, plugDz, plugSPhi, plugDPhi);
-	G4LogicalVolume *plugLV = new G4LogicalVolume(plugCon, PMMA, "plugLV", 0, 0, 0);
-	G4ThreeVector plugTV (0,0,(electrode_hz+hz));
-	plugPV = new G4PVPlacement(rotateMatrixDiode, plugTV, "plugPV", plugLV, PVWorld, false, 0);
+	// G4Cons* plugCon = new G4Cons("plugCone", plugRmin1, plugRmax1, plugRmin2, plugRmax2, plugDz, plugSPhi, plugDPhi);
+	// G4LogicalVolume *plugLV = new G4LogicalVolume(plugCon, PMMA, "plugLV", 0, 0, 0);
+	// G4ThreeVector plugTV (0,0,(electrode_hz+hz));
+	// plugPV = new G4PVPlacement(rotateMatrixDiode, plugTV, "plugPV", plugLV, PVWorld, false, 0);
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,13 +305,13 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 
 	SiDiodeLV->SetRegion(regVol);
 	phantomLV->SetRegion(regVol);
-	plugLV->SetRegion(regVol);
+	// plugLV->SetRegion(regVol);
 	PCB_LV->SetRegion(regVol);
 	electrode_LVTop->SetRegion(regVol);
 	electrode_LVBot->SetRegion(regVol);
 	regVol->AddRootLogicalVolume(SiDiodeLV);
 	regVol->AddRootLogicalVolume(phantomLV);
-	regVol->AddRootLogicalVolume(plugLV);
+	// regVol->AddRootLogicalVolume(plugLV);
 	regVol->AddRootLogicalVolume(PCB_LV);
 	regVol->AddRootLogicalVolume(electrode_LVTop);
 	regVol->AddRootLogicalVolume(electrode_LVBot);
@@ -284,23 +319,24 @@ bool CML2Ph_SiDiode::Construct(G4VPhysicalVolume *PWorld, G4int saving_in_ROG_Vo
 	// Visibility
 	G4VisAttributes* simpleAlSVisAtt= new G4VisAttributes(G4Colour::Cyan());
 	simpleAlSVisAtt->SetVisibility(true);
-	simpleAlSVisAtt->SetForceWireframe(true);
+	simpleAlSVisAtt->SetForceSolid(true);
 	SiDiodeLV->SetVisAttributes(simpleAlSVisAtt);
+
+	G4VisAttributes* simpleAlSVisAttLegs= new G4VisAttributes(G4Colour::Red());
+	simpleAlSVisAttLegs->SetVisibility(true);
+	simpleAlSVisAttLegs->SetForceSolid(true);
+	SiDiodeSidesLV->SetVisAttributes(simpleAlSVisAttLegs);
 
 	G4VisAttributes* simpleAlSVisAttOrb= new G4VisAttributes(G4Colour::Gray());
 	simpleAlSVisAttOrb->SetVisibility(true);
 	simpleAlSVisAttOrb->SetForceWireframe(true);
 	phantomLV->SetVisAttributes(simpleAlSVisAttOrb);
+       
 
-	G4VisAttributes* simpleAlSVisAttPlug= new G4VisAttributes(G4Colour::Gray());
-	simpleAlSVisAttPlug->SetVisibility(true);
-	simpleAlSVisAttPlug->SetForceSolid(true);
-	plugLV->SetVisAttributes(simpleAlSVisAttPlug);
-
-	G4VisAttributes* simpleAlSVisAtt_PCB= new G4VisAttributes(G4Colour::Green());
-	simpleAlSVisAtt_PCB->SetVisibility(true);
-	simpleAlSVisAtt_PCB->SetForceWireframe(true);
-	PCB_LV->SetVisAttributes(simpleAlSVisAtt_PCB);
+	// G4VisAttributes* simpleAlSVisAtt_PCB= new G4VisAttributes(G4Colour::Green());
+	// simpleAlSVisAtt_PCB->SetVisibility(true);
+	// simpleAlSVisAtt_PCB->SetForceWireframe(true);
+	// PCB_LV->SetVisAttributes(simpleAlSVisAtt_PCB);
 
 	G4VisAttributes* simpleAlSVisAtt_electrode= new G4VisAttributes(G4Colour::Yellow());
 	simpleAlSVisAtt_electrode->SetVisibility(true);

@@ -51,7 +51,8 @@
 enum idParticleSource
 {
 	id_randomTarget=1,
-	id_phaseSpace=2
+	id_phaseSpace=2,
+	id_GPS=3
 };
 enum idTypeOfSensitiveDetector
 {

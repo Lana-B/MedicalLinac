@@ -126,6 +126,9 @@ ML2PhysicsList::ML2PhysicsList() : G4VModularPhysicsList()
 
   // Deacy physics and all particles
   decPhysicsList = new G4DecayPhysics();
+
+  stepMaxProcess = new ML2StepMax();
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -246,7 +249,7 @@ void ML2PhysicsList::AddPhysicsList(const G4String& name)
 void ML2PhysicsList::AddStepMax()
 {
   // Step limitation seen as a process
-  stepMaxProcess = new ML2StepMax();
+  // stepMaxProcess = new ML2StepMax();
 
   auto particleIterator=GetParticleIterator();
   particleIterator->reset();
@@ -256,7 +259,7 @@ void ML2PhysicsList::AddStepMax()
 
     if (stepMaxProcess->IsApplicable(*particle) && pmanager)
       {
-	pmanager ->AddDiscreteProcess(stepMaxProcess);
+      	pmanager ->AddDiscreteProcess(stepMaxProcess);
       }
   }
 }

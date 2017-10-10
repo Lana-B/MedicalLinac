@@ -73,7 +73,7 @@ public:
 private:
 	void saveData(G4String Filename, Svoxel ***voxels);
 	G4int getIdFromVolumeName(G4String name);
-
+	G4double energyDep;
 	G4ThreeVector halfSize, centre;
 	G4ThreeVector pos;
 	G4double halfXVoxelDimensionX, halfXVoxelDimensionY, halfXVoxelDimensionZ;
@@ -87,6 +87,12 @@ private:
 	G4double vecPosX;
 	G4double vecPosY;
 	G4double vecPosZ;
+	std::vector <G4double> vecEnDep;
+	std::vector <G4double> vecEnDep2;	
+	std::vector <G4double> vecX;
+	std::vector <G4double> vecY;	
+	std::vector <G4double> vecZ;
+
 };
 
 

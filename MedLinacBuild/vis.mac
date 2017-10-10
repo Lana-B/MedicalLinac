@@ -41,7 +41,7 @@
 #/vis/viewer/set/style wireframe
 #
 # Draw coordinate axes:
-/vis/scene/add/axes 0 0 0 1 m
+#/vis/scene/add/axes 0 0 0 1 m
 #
 # Draw smooth trajectories at end of event, showing trajectory points
 # as markers 2 pixels wide:
@@ -81,7 +81,8 @@
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 
 /accelerator/rotationX 0 deg  # angles of rotation along X  [deg]
-/run/beamOn 1001
+
+/run/beamOn 100
 
 #/phantom/centre 0 0 200 # phantom centre coordinates in the world [mm]
 #/accelerator/rotationX 45 deg  # angles of rotation along X  [deg]

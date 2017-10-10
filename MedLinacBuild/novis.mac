@@ -32,7 +32,7 @@
 ### Number of primary events
 
 
-/general/nBeam 10000                                # number of events to run
+/general/nBeam 10000                              # number of events to run
 
 
 ### NUMBER STORED  
@@ -52,14 +52,42 @@
 /primaryParticleData/GunRadious 10 mm                 # radious primary particles beam
 /primaryParticleData/sourceTypeName randomTarget       # type of particle generator source
 #/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
-/primaryParticleData/GunParticleType gamma### PHANTOM
+/primaryParticleData/GunParticleType gamma
+
+### GPS info
+/gps/hist/point 0.25 0.004107824
+/gps/hist/point 0.50 0.1295177
+/gps/hist/point 0.75 0.4609022
+/gps/hist/point 1.00 0.4609022   
+/gps/hist/point 1.25 0.4435880   
+/gps/hist/point 1.50 0.4084962   
+/gps/hist/point 1.75 0.4084962   
+/gps/hist/point 2.00 0.2496504   
+/gps/hist/point 2.25 0.2367691  
+/gps/hist/point 2.50 0.1867142   
+/gps/hist/point 2.75 0.1382681   
+/gps/hist/point 3.00 0.1304545   
+/gps/hist/point 3.25 0.1484442   
+/gps/hist/point 3.50 0.09496227   
+/gps/hist/point 3.75 0.1246583   
+/gps/hist/point 4.00 0.09773248   
+/gps/hist/point 4.25 0.08891984   
+/gps/hist/point 4.50 0.05154921   
+/gps/hist/point 4.75 0.04184013   
+/gps/hist/point 5.00 0.04803306   
+/gps/hist/point 5.25 0.01624749   
+/gps/hist/point 5.50 0.02715377   
+/gps/hist/point 5.75 0.01199324   
+/gps/hist/point 6.00 0.01573713   
+
 ### PHANTOM
 
 /phantom/PhantomName SiDiode				# phantom name to select among those implemented
 #/phantom/PhantomName fullWater				# phantom name to select among those implemented
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 #/phantom/centre 0 0 -200 # phantom centre coordinates in the world [mm]
-/Step/waterPhantomStepMax 1 mm
+
+/Step/waterPhantomStepMax 0.0001 mm
 
 ### ACCELERATOR
 

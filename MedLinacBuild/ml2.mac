@@ -19,7 +19,7 @@
 /general/centrePhaseSpace 0 0 550 mm                   # position of the centre of the plane phase space
 /general/halfSizePhaseSpace 200 200 1 mm              # half size of the plane phase space
 /general/bSavePhaseSpace true                         # true if to save the phase space
-/general/bStopAtPhaseSpace true                       # true if to kill the particle at the phase space
+/general/bStopAtPhaseSpace false                       # true if to kill the particle at the phase space
 /general/PhaseSpaceOutFile PhSp_Acc1                   # full file name of the phase space
 /general/bForcePhaseSpaceBeforeJaws true
 
@@ -32,7 +32,7 @@
 ### Number of primary events
 
 
-/general/nBeam 3000                                 # number of events to run
+/general/nBeam 10000                                # number of events to run
 
 
 ### NUMBER STORED  
@@ -45,13 +45,48 @@
 
 ### Primary generator 
 
-/primaryParticleData/nMaxParticlesInRamPhaseSpace 1000 # maximum particle number loaded from the phase space file each time
-/primaryParticleData/nIdenticalParticles 1             # number of identical particles generated in the primary generator  
-/primaryParticleData/GunMeanEnegy 6 MeV                # mean energy of the primary particles 
-/primaryParticleData/GunStdEnegy 0.127 MeV             # std energy of the primary particles 
-/primaryParticleData/GunRadious 0.5 mm                 # radious primary particles beam
-/primaryParticleData/sourceTypeName randomTarget       # type of particle generator source
-/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
+#/primaryParticleData/nMaxParticlesInRamPhaseSpace 1000 # maximum particle number loaded from the phase space file each time
+#/primaryParticleData/nIdenticalParticles 1             # number of identical particles generated in the primary generator  
+#/primaryParticleData/GunMeanEnegy 2 MeV                # mean energy of the primary particles 
+#/primaryParticleData/GunStdEnegy 0.10 MeV             # std energy of the primary particles 
+#/primaryParticleData/GunRadious 10 mm                 # radious primary particles beam
+#/primaryParticleData/sourceTypeName randomTarget       # type of particle generator source
+#/primaryParticleData/calculatedPhaseSpaceFileIN PhSp_Acc1_1.txt # full path and file name of the phase space file to be used as particle generator
+#/primaryParticleData/GunParticleType gamma
+
+/primaryParticleData/sourceTypeName G0PS       # type of particle generator source
+/gps/particle gamma
+/gps/position 0 0 -90 cm
+/gps/direction 0 0 1
+/gps/ang/type iso
+/gps/ang/mintheta 179.5 deg
+
+### GPS info
+/gps/hist/point 0.25 0.004107824
+/gps/hist/point 0.50 0.1295177
+/gps/hist/point 0.75 0.4609022
+/gps/hist/point 1.00 0.4609022   
+/gps/hist/point 1.25 0.4435880   
+/gps/hist/point 1.50 0.4084962   
+/gps/hist/point 1.75 0.4084962   
+/gps/hist/point 2.00 0.2496504   
+/gps/hist/point 2.25 0.2367691  
+/gps/hist/point 2.50 0.1867142   
+/gps/hist/point 2.75 0.1382681   
+/gps/hist/point 3.00 0.1304545   
+/gps/hist/point 3.25 0.1484442   
+/gps/hist/point 3.50 0.09496227   
+/gps/hist/point 3.75 0.1246583   
+/gps/hist/point 4.00 0.09773248   
+/gps/hist/point 4.25 0.08891984   
+/gps/hist/point 4.50 0.05154921   
+/gps/hist/point 4.75 0.04184013   
+/gps/hist/point 5.00 0.04803306   
+/gps/hist/point 5.25 0.01624749   
+/gps/hist/point 5.50 0.02715377   
+/gps/hist/point 5.75 0.01199324   
+/gps/hist/point 6.00 0.01573713 
+
 
 ### PHANTOM
 
@@ -59,7 +94,7 @@
 #/phantom/PhantomName fullWater				# phantom name to select among those implemented
 /phantom/centre 0 0 0 # phantom centre coordinates in the world [mm]
 #/phantom/centre 0 0 -200 # phantom centre coordinates in the world [mm]
-/step/waterPhantomStepMax 1  mm
+/Step/waterPhantomStepMax 1  mm
 ### ACCELERATOR
 
 /accelerator/AcceleratorName acc1			# accelerator name to select among those implemented 
@@ -71,7 +106,7 @@
 
 ### Physic
 
-#/physic/addPhysics standard_opt3 			# Standard Electromagnetic models
+#/physic/addPhysics standard_opt3 			    # Standard Electromagnetic models
 /physic/addPhysics LowE_Livermore  		        # Lowenergy-Livermore Electromagnetic models
 #/physic/addPackage QGSP_BIC    		        # use of the Package Physic lists
 
@@ -90,3 +125,5 @@
 #    Phantoms
 # fullWater // water box
 # boxInBox  // box in a box with a layer of PMMA at the exposed surface
+
+

@@ -45,6 +45,7 @@
 
 
 #include "G4VUserPrimaryGeneratorAction.hh"
+#include "G4GeneralParticleSource.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleGun.hh"
 #include "G4Event.hh"
@@ -59,9 +60,11 @@
 #include "ML2PrimaryGenerationActionMessenger.hh"
 
 class G4ParticleGun;
+class G4GeneralParticleSource;
+
 class G4ParticleDefinition;
 class CML2PrimaryGenerationActionMessenger;
-
+class G4Event;
 class CML2PrimaryGenerationAction : public G4VUserPrimaryGeneratorAction
 {
 public:
@@ -90,6 +93,10 @@ public:
 		else if (sourceTypeName=="phaseSpace")
 		{
 			idParticleSource=id_phaseSpace;
+		}
+		else if (sourceTypeName=="GPS")
+		{
+			idParticleSource=id_GPS;
 		}
 	}
 	inline void setParticleType(G4String part)
@@ -134,6 +141,7 @@ private:
 	G4Timer myTime;
 	G4double sinTheta, cosTheta, phi;
 	G4double ro, alfa;
+	G4GeneralParticleSource*  fParticleGun;
 	G4ParticleGun *particleGun;
 	G4ParticleDefinition *gamma;
 	G4ParticleDefinition *electron;
